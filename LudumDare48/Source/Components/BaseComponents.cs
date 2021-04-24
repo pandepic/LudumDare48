@@ -45,6 +45,7 @@ namespace LudumDare48
         public Vector2 Scale;
         public Texture2D Texture;
         public int Layer;
+        public SpriteFlipType FlipType;
     }
     
     public struct MovementComponent

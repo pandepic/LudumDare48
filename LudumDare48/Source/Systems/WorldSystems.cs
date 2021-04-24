@@ -24,15 +24,18 @@ namespace LudumDare48
             {
                 ref var movement = ref entity.GetComponent<MovementComponent>();
                 ref var physics = ref entity.GetComponent<PhysicsComponent>();
+                ref var drawable = ref entity.GetComponent<DrawableComponent>();
                 
                 switch (movement.MovementType)
                 {
                     case MovementType.Left:
                         physics.Acceleration.X = physics.MoveSpeed;
+                        drawable.FlipType = SpriteFlipType.Horizontal;
                         break;
                     
                     case MovementType.Right:
                         physics.Acceleration.X = -physics.MoveSpeed;
+                        drawable.FlipType = SpriteFlipType.None;
                         break;
                     
                     case MovementType.Jump:

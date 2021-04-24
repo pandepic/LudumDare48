@@ -20,6 +20,7 @@ namespace LudumDare48
             public Texture2D Texture;
             public int Layer;
             public RgbaFloat Color;
+            public SpriteFlipType FlipType;
         }
         
         private static List<DrawItem> _drawList = new List<DrawItem>();
@@ -41,6 +42,7 @@ namespace LudumDare48
                     Texture = drawable.Texture,
                     Layer = drawable.Layer,
                     Color = RgbaFloat.White,
+                    FlipType = drawable.FlipType,
                 });
             }
             

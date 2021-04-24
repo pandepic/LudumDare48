@@ -41,7 +41,7 @@ namespace LudumDare48
             ColliderGroup = Registry.RegisterGroup<TransformComponent, PhysicsComponent, ColliderComponent>();
             ColliderEventGroup = Registry.RegisterGroup<ColliderEventComponent>();
             DeathGroup = Registry.RegisterGroup<DeathTag>();
-            MovementGroup = Registry.RegisterGroup<MovementComponent, PhysicsComponent>();
+            MovementGroup = Registry.RegisterGroup<MovementComponent, PhysicsComponent, DrawableComponent>();
             
             EntityBuilder.Registry = Registry;
             
@@ -62,6 +62,9 @@ namespace LudumDare48
             
             // process removal queues for entities and components
             Registry.SystemsFinished();
+            
+            var playerRect = EntityUtility.GetEntityDrawRect(Player);
+            //Camera.Center(playerRect.Center);
         }
         
         public override void Draw(GameTimer gameTimer)
