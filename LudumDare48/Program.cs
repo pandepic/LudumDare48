@@ -6,7 +6,7 @@ namespace LudumDare48
     {
         static void Main(string[] args)
         {
-            #if RELEASE
+#if RELEASE
             try
             {
 #endif

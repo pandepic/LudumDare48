@@ -11,7 +11,11 @@
     <Setting Name="UIVolume" Value="0.5" />
   </Section>
   <Section Name="Controls">
-    <!-- <Setting Name="MoveUp" Value="W,Up" Type="Keyboard" /> -->
+    <Setting Name="MoveUp" Value="W,Up,Space" Type="Keyboard" />
+    <Setting Name="MoveDown" Value="S,Down" Type="Keyboard" />
+    <Setting Name="MoveLeft" Value="A,Left" Type="Keyboard" />
+    <Setting Name="MoveRight" Value="D,Right" Type="Keyboard" />
+    
     <!-- <Setting Name="Interact" Value="Right" Type="Mouse" /> -->
   </Section>
 </Settings>

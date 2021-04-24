@@ -1,0 +1,36 @@
+using System.Numerics;
+using ElementEngine;
+using ElementEngine.ECS;
+
+using Rectangle = ElementEngine.Rectangle;
+
+namespace LudumDare48
+{
+    public enum ColliderEventType
+    {
+        None,
+        Death,
+    }
+    
+    public struct PhysicsComponent
+    {
+        public float MoveSpeed;
+        public float JumpSpeed;
+        public Vector2 Acceleration;
+        public Vector2 Velocity;
+        public Vector2 MaxSpeed;
+        public bool IsFalling;
+    }
+    
+    public struct ColliderComponent
+    {
+        public ColliderEventType EventType;
+        public Rectangle CollisionRect;
+    }
+    
+    public struct ColliderEventComponent
+    {
+        public ColliderEventType EventType;
+        public Entity CollidedWith;
+    }
+}

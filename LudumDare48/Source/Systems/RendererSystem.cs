@@ -33,7 +33,7 @@ namespace LudumDare48
                 
                 _drawList.Add(new DrawItem()
                 {
-                    Position = transform.TransformedPosition,
+                    Position = transform.TransformedPosition.ToVector2I(),
                     Origin = drawable.Origin,
                     Scale = drawable.Scale,
                     Rotation = transform.Rotation,

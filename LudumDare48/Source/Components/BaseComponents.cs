@@ -6,6 +6,13 @@ using Rectangle = ElementEngine.Rectangle;
 
 namespace LudumDare48
 {
+    public enum MovementType
+    {
+        Left,
+        Right,
+        Jump,
+    }
+    
     public struct TransformComponent
     {
         public Entity Parent;
@@ -38,5 +45,10 @@ namespace LudumDare48
         public Vector2 Scale;
         public Texture2D Texture;
         public int Layer;
+    }
+    
+    public struct MovementComponent
+    {
+        public MovementType MovementType;
     }
 }

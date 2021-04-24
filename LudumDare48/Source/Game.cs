@@ -6,6 +6,7 @@ namespace LudumDare48
     public enum GameStateType
     {
         Menu,
+        Play,
     }
     
     public class Game : BaseGame
@@ -38,6 +39,9 @@ namespace LudumDare48
             Window.Resizable = false;
             
             GameStates.Add(GameStateType.Menu, new GameStateMenu(this));
+            GameStates.Add(GameStateType.Play, new GameStatePlay(this));
+            
+            SetGameState(GameStateType.Play);
         }
         
         public void SetGameState(GameStateType type)
