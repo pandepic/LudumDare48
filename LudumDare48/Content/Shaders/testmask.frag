@@ -1,5 +1,10 @@
 #version 450
 
+layout(set = 0, binding = 0) uniform ProjectionViewBuffer {
+    mat4x4 uProjection;
+    mat4x4 uView;
+};
+
 layout (set = 1, binding = 0) uniform texture2D fTexture;
 layout (set = 1, binding = 1) uniform sampler fTextureSampler;
 
@@ -15,10 +20,7 @@ void main()
 {
     vec4 testMask = texture(sampler2D(fMask, fMaskSampler), fTexCoords);
     
-    if (testMask.x == 1.0 && testMask.y == 1.0 && testMask.z == 1.0 && testMask.w == 1.0)
-    {
-        discard;
-    }
+    if (testMask.x < 0.5) { discard; }
     
     fFragColor = texture(sampler2D(fTexture, fTextureSampler), fTexCoords) * fColor;
 }

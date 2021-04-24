@@ -61,17 +61,29 @@ namespace LudumDare48
             
             EntityBuilder.CreatePlatform(new Vector2(25, 500));
             
-            MaskTextureTest = new Texture2D(200, 200);
-            MaskTextureTest.BeginRenderTarget();
-            MaskTextureTest.RenderTargetClear(Veldrid.RgbaFloat.Clear);
-            MaskTextureTest.EndRenderTarget();
+            MaskTextureTest = new Texture2D(266, 200);
             
             var shader = new SimpleShader(ElementGlobals.GraphicsDevice,
                 File.ReadAllText(AssetManager.GetAssetPath("testmask.vert")),
                 File.ReadAllText(AssetManager.GetAssetPath("testmask.frag")),
                 ElementEngine.Vertex2DPositionTexCoordsColor.VertexLayout);
             
+            var pipelineTexture = new SimplePipelineTexture2D("fMask", AssetManager.LoadTexture2D("TestMask.png"), SamplerType.Point);
+            
             var pipeline = SpriteBatch2D.GetDefaultSimplePipeline(ElementGlobals.GraphicsDevice, MaskTextureTest, shader);
+            pipeline.AddPipelineTexture(pipelineTexture);
+            
+            MaskTextureTest.BeginRenderTarget();
+            MaskTextureTest.RenderTargetClear(Veldrid.RgbaFloat.Clear);
+            
+            using (var sb = new SpriteBatch2D(266, 200, MaskTextureTest.GetFramebuffer().OutputDescription, pipeline))
+            {
+                sb.Begin(SamplerType.Point);
+                sb.DrawTexture2D(AssetManager.LoadTexture2D("TestBG.png"), Vector2.Zero);
+                sb.End();
+            }
+            
+            MaskTextureTest.EndRenderTarget();
         }
         
         // called every time the state loads
@@ -108,6 +120,7 @@ namespace LudumDare48
             
             SpriteBatch.Begin(SamplerType.Point);
             SpriteBatch.DrawText(Font, playerRect.Location.ToString(), new Vector2(25), Veldrid.RgbaByte.White, 32, 1);
+            SpriteBatch.DrawTexture2D(MaskTextureTest, new Vector2(100, 100));
             SpriteBatch.End();
             
             if (ShowDebug)

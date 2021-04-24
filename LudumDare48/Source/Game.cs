@@ -30,7 +30,7 @@ namespace LudumDare48
             vsync = false;
 #endif
             
-            SetupWindow(windowRect, "LudumDare48", null, vsync);
+            SetupWindow(windowRect, "LudumDare48", Veldrid.GraphicsBackend.OpenGL, vsync);
             SetupAssets("Content");
             
             ClearColor = Veldrid.RgbaFloat.CornflowerBlue;
