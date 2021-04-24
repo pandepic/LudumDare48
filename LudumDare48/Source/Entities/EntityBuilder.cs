@@ -10,13 +10,13 @@ namespace LudumDare48
     {
         public static Registry Registry;
         
-        public static Entity CreatePlayer(Vector2 startPosition)
+        public static Entity CreatePlayer(Vector2 position)
         {
             var player = Registry.CreateEntity();
             
             player.TryAddComponent(new TransformComponent()
             {
-                Position = startPosition,
+                Position = position,
                 Rotation = 0f,
             });
             
@@ -34,7 +34,7 @@ namespace LudumDare48
             {
                 Texture = new Texture2D(50, 50, Veldrid.RgbaByte.Red),
                 AtlasRect = new Rectangle(0, 0, 50, 50),
-                Origin = new Vector2(50, 50) / 2,
+                Origin = Vector2.Zero,
                 Scale = new Vector2(1),
                 Layer = 2,
                 FlipType = SpriteFlipType.None,
@@ -47,6 +47,37 @@ namespace LudumDare48
             });
             
             return player;
-        }
+            
+        } // CreatePlayer
+        
+        public static Entity CreatePlatform(Vector2 position)
+        {
+            var platform = Registry.CreateEntity();
+            
+            platform.TryAddComponent(new TransformComponent()
+            {
+                Position = position,
+                Rotation = 0f,
+            });
+            
+            platform.TryAddComponent(new DrawableComponent()
+            {
+                Texture = new Texture2D(50, 50, Veldrid.RgbaByte.Blue),
+                AtlasRect = new Rectangle(0, 0, 500, 50),
+                Origin = Vector2.Zero,
+                Scale = new Vector2(1),
+                Layer = 2,
+                FlipType = SpriteFlipType.None,
+            });
+            
+            platform.TryAddComponent(new ColliderComponent()
+            {
+                EventType = ColliderEventType.None,
+                CollisionRect = new Rectangle(0, 0, 500, 50),
+            });
+            
+            return platform;
+            
+        } // CreatePlatform
     }
 }

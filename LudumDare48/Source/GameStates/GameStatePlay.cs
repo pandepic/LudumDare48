@@ -20,7 +20,8 @@ namespace LudumDare48
         public Group ColliderGroup;
         public Group ColliderEventGroup;
         public Group DeathGroup;
-        public Group MovementGroup;
+        public Group StartMovementGroup;
+        public Group StopMovementGroup;
         
         // Special entities
         public Entity Player;
@@ -38,14 +39,17 @@ namespace LudumDare48
             
             DrawableGroup = Registry.RegisterGroup<TransformComponent, DrawableComponent>();
             PhysicsGroup = Registry.RegisterGroup<TransformComponent, PhysicsComponent>();
-            ColliderGroup = Registry.RegisterGroup<TransformComponent, PhysicsComponent, ColliderComponent>();
+            ColliderGroup = Registry.RegisterGroup<TransformComponent, ColliderComponent>();
             ColliderEventGroup = Registry.RegisterGroup<ColliderEventComponent>();
             DeathGroup = Registry.RegisterGroup<DeathTag>();
-            MovementGroup = Registry.RegisterGroup<MovementComponent, PhysicsComponent, DrawableComponent>();
+            StartMovementGroup = Registry.RegisterGroup<StartMovementComponent, PhysicsComponent, DrawableComponent>();
+            StopMovementGroup = Registry.RegisterGroup<StopMovementComponent, PhysicsComponent, DrawableComponent>();
             
             EntityBuilder.Registry = Registry;
             
             Player = EntityBuilder.CreatePlayer(new Vector2(50, 50));
+            
+            EntityBuilder.CreatePlatform(new Vector2(25, 500));
         }
 
         // called every time the state loads
@@ -59,6 +63,8 @@ namespace LudumDare48
             Systems.Physics(PhysicsGroup, ColliderGroup, gameTimer, GRAVITY, MOVE_STEP);
             Systems.ColliderEvents(ColliderEventGroup);
             Systems.Death(DeathGroup);
+            Systems.StartMovement(StartMovementGroup);
+            Systems.StopMovement(StopMovementGroup);
             
             // process removal queues for entities and components
             Registry.SystemsFinished();
@@ -82,8 +88,9 @@ namespace LudumDare48
             switch (controlName)
             {
                 case "MoveUp":
+                if (state == GameControlState.Pressed)
                 {
-                    Player.TryAddComponent(new MovementComponent()
+                    Player.TryAddComponent(new StartMovementComponent()
                     {
                         MovementType = MovementType.Jump,
                     });
@@ -91,13 +98,19 @@ namespace LudumDare48
                 break;
                 
                 case "MoveDown":
-                {
-                }
                 break;
                 
                 case "MoveLeft":
+                if (state == GameControlState.Pressed)
                 {
-                    Player.TryAddComponent(new MovementComponent()
+                    Player.TryAddComponent(new StartMovementComponent()
+                    {
+                        MovementType = MovementType.Left,
+                    });
+                }
+                else if (state == GameControlState.Released)
+                {
+                    Player.TryAddComponent(new StopMovementComponent()
                     {
                         MovementType = MovementType.Left,
                     });
@@ -105,8 +118,16 @@ namespace LudumDare48
                 break;
                 
                 case "MoveRight":
+                if (state == GameControlState.Pressed)
                 {
-                    Player.TryAddComponent(new MovementComponent()
+                    Player.TryAddComponent(new StartMovementComponent()
+                    {
+                        MovementType = MovementType.Right,
+                    });
+                }
+                else if (state == GameControlState.Released)
+                {
+                    Player.TryAddComponent(new StopMovementComponent()
                     {
                         MovementType = MovementType.Right,
                     });

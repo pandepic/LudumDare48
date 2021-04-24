@@ -35,7 +35,6 @@ namespace LudumDare48
         private static void CollisionMovement(Entity entity, ref TransformComponent transform, ref PhysicsComponent physics, Group colliderGroup, GameTimer gameTimer, float moveStep)
         {
             ref var collider = ref entity.GetComponent<ColliderComponent>();
-            var entityRect = new Rectangle(collider.CollisionRect.Location.ToVector2() + transform.TransformedPosition, collider.CollisionRect.SizeF);
 
             var directionY = -1f;
             if (physics.Velocity.Y > 0)
@@ -50,7 +49,7 @@ namespace LudumDare48
                 movement.X *= -1f;
             if (movement.Y < 0)
                 movement.Y *= -1f;
-
+            
             while (movement.Y > 0)
             {
                 var step = moveStep;
@@ -67,13 +66,14 @@ namespace LudumDare48
                     if (checkCollider == entity)
                         continue;
                     
-                    ref var checkColliderTransform = ref entity.GetComponent<TransformComponent>();
-                    ref var checkColliderCollider = ref entity.GetComponent<ColliderComponent>();
+                    ref var checkColliderTransform = ref checkCollider.GetComponent<TransformComponent>();
+                    ref var checkColliderCollider = ref checkCollider.GetComponent<ColliderComponent>();
 
                     var checkColliderRect = new Rectangle(
                         checkColliderCollider.CollisionRect.Location.ToVector2() + checkColliderTransform.TransformedPosition,
                         checkColliderCollider.CollisionRect.SizeF);
 
+                    var entityRect = new Rectangle(collider.CollisionRect.Location.ToVector2() + transform.TransformedPosition, collider.CollisionRect.SizeF);
                     var intersect = Rectangle.Intersect(entityRect, checkColliderRect);
 
                     if (intersect.Height <= 0)
@@ -93,7 +93,7 @@ namespace LudumDare48
                     }
                 }
             }
-
+            
             while (movement.X > 0)
             {
                 var step = moveStep;
@@ -102,20 +102,21 @@ namespace LudumDare48
 
                 movement.X -= step;
 
-                transform.Position.X += step * directionY;
+                transform.Position.X += step * directionX;
 
                 foreach (var checkCollider in colliderGroup.Entities)
                 {
                     if (checkCollider == entity)
                         continue;
                     
-                    ref var checkColliderTransform = ref entity.GetComponent<TransformComponent>();
-                    ref var checkColliderCollider = ref entity.GetComponent<ColliderComponent>();
+                    ref var checkColliderTransform = ref checkCollider.GetComponent<TransformComponent>();
+                    ref var checkColliderCollider = ref checkCollider.GetComponent<ColliderComponent>();
 
                     var checkColliderRect = new Rectangle(
                         checkColliderCollider.CollisionRect.Location.ToVector2() + checkColliderTransform.TransformedPosition,
                         checkColliderCollider.CollisionRect.SizeF);
 
+                    var entityRect = new Rectangle(collider.CollisionRect.Location.ToVector2() + transform.TransformedPosition, collider.CollisionRect.SizeF);
                     var intersect = Rectangle.Intersect(entityRect, checkColliderRect);
 
                     if (intersect.Width <= 0)

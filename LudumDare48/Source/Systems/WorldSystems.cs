@@ -18,23 +18,25 @@ namespace LudumDare48
             }
         }
         
-        public static void MovementComponent(Group group)
+        public static void StartMovement(Group group)
         {
             foreach (var entity in group.Entities)
             {
-                ref var movement = ref entity.GetComponent<MovementComponent>();
+                ref var movement = ref entity.GetComponent<StartMovementComponent>();
                 ref var physics = ref entity.GetComponent<PhysicsComponent>();
                 ref var drawable = ref entity.GetComponent<DrawableComponent>();
                 
                 switch (movement.MovementType)
                 {
                     case MovementType.Left:
-                        physics.Acceleration.X = physics.MoveSpeed;
+                        physics.Acceleration.X += -physics.MoveSpeed;
+                        physics.Velocity.X = 0;
                         drawable.FlipType = SpriteFlipType.Horizontal;
                         break;
                     
                     case MovementType.Right:
-                        physics.Acceleration.X = -physics.MoveSpeed;
+                        physics.Acceleration.X += physics.MoveSpeed;
+                        physics.Velocity.X = 0;
                         drawable.FlipType = SpriteFlipType.None;
                         break;
                     
@@ -43,8 +45,35 @@ namespace LudumDare48
                         break;
                 }
                 
-                entity.RemoveComponent<MovementComponent>();
+                entity.RemoveComponent<StartMovementComponent>();
             }
         }
+        
+        public static void StopMovement(Group group)
+        {
+            foreach (var entity in group.Entities)
+            {
+                ref var movement = ref entity.GetComponent<StopMovementComponent>();
+                ref var physics = ref entity.GetComponent<PhysicsComponent>();
+                ref var drawable = ref entity.GetComponent<DrawableComponent>();
+                
+                switch (movement.MovementType)
+                {
+                    case MovementType.Left:
+                        physics.Acceleration.X += physics.MoveSpeed;
+                        physics.Velocity.X = 0;
+                        drawable.FlipType = SpriteFlipType.Horizontal;
+                        break;
+                    
+                    case MovementType.Right:
+                        physics.Acceleration.X += -physics.MoveSpeed;
+                        physics.Velocity.X = 0;
+                        drawable.FlipType = SpriteFlipType.None;
+                        break;
+                }
+                
+                entity.RemoveComponent<StopMovementComponent>();
+            }
+        } // StopMovement
     }
 }

@@ -48,7 +48,12 @@ namespace LudumDare48
         public SpriteFlipType FlipType;
     }
     
-    public struct MovementComponent
+    public struct StartMovementComponent
+    {
+        public MovementType MovementType;
+    }
+    
+    public struct StopMovementComponent
     {
         public MovementType MovementType;
     }
