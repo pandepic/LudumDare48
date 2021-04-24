@@ -45,7 +45,8 @@ namespace LudumDare48
             player.TryAddComponent(new ColliderComponent()
             {
                 EventType = ColliderEventType.None,
-                CollisionRect = new Rectangle(0, 0, 50 * scale, (37 - 1) * scale), // Temp manual math, could be done in a meta file.
+                CollisionRect = new Rectangle(0, 0, 50, (37 - 1)), // Temp manual math, could be done in a meta file.
+                Scale = new Vector2(scale),
             });
 
             player.TryAddComponent(new PlayerTag());
@@ -78,6 +79,7 @@ namespace LudumDare48
             {
                 EventType = ColliderEventType.None,
                 CollisionRect = new Rectangle(0, 0, 500, 50),
+                Scale = new Vector2(1f),
             });
 
             return platform;

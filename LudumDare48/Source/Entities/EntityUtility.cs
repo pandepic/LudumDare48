@@ -22,7 +22,7 @@ namespace LudumDare48
             ref var transform = ref entity.GetComponent<TransformComponent>();
             ref var collider = ref entity.GetComponent<ColliderComponent>();
             
-            return new Rectangle(collider.CollisionRect.Location.ToVector2() + transform.TransformedPosition, collider.CollisionRect.SizeF);
+            return new Rectangle(collider.CollisionRect.Location.ToVector2() + transform.TransformedPosition, collider.CollisionRect.SizeF * collider.Scale);
         }
     }
 }

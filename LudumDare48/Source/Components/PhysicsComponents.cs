@@ -27,6 +27,7 @@ namespace LudumDare48
     {
         public ColliderEventType EventType;
         public Rectangle CollisionRect;
+        public Vector2 Scale;
     }
     
     public struct ColliderEventComponent
