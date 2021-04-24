@@ -14,7 +14,7 @@ namespace LudumDare48
             ref var transform = ref entity.GetComponent<TransformComponent>();
             ref var drawable = ref entity.GetComponent<DrawableComponent>();
             
-            return new Rectangle(transform.TransformedPosition, drawable.AtlasRect.SizeF);
+            return new Rectangle(transform.TransformedPosition, drawable.AtlasRect.SizeF * drawable.Scale);
         }
     }
 }
