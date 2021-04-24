@@ -63,6 +63,8 @@ namespace LudumDare48
             foreach (var item in _drawList)
                 spriteBatch.DrawTexture2D(item.Texture, item.Position, sourceRect: item.SourceRect, scale: item.Scale, origin: item.Origin, rotation: item.Rotation, color: item.Color);
             
+            _drawList.Clear();
+            
         } // Render
     }
 }

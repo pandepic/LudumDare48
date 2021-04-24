@@ -64,6 +64,9 @@ namespace LudumDare48
 
                 foreach (var checkCollider in colliderGroup.Entities)
                 {
+                    if (checkCollider == entity)
+                        continue;
+                    
                     ref var checkColliderTransform = ref entity.GetComponent<TransformComponent>();
                     ref var checkColliderCollider = ref entity.GetComponent<ColliderComponent>();
 
@@ -103,6 +106,9 @@ namespace LudumDare48
 
                 foreach (var checkCollider in colliderGroup.Entities)
                 {
+                    if (checkCollider == entity)
+                        continue;
+                    
                     ref var checkColliderTransform = ref entity.GetComponent<TransformComponent>();
                     ref var checkColliderCollider = ref entity.GetComponent<ColliderComponent>();
 

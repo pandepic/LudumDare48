@@ -6,7 +6,7 @@ namespace LudumDare48
 {
     public class GameStatePlay : GameState
     {
-        public const float GRAVITY = 1000f;
+        public const float GRAVITY = 100f;
         public const float MOVE_STEP = 8f;
         
         public Game Game;
@@ -45,7 +45,7 @@ namespace LudumDare48
             
             EntityBuilder.Registry = Registry;
             
-            Player = EntityBuilder.CreatePlayer(new Vector2(0, 0));
+            Player = EntityBuilder.CreatePlayer(new Vector2(50, 50));
         }
 
         // called every time the state loads
@@ -69,6 +69,9 @@ namespace LudumDare48
         
         public override void Draw(GameTimer gameTimer)
         {
+            var test = new Texture2D(50, 50, Veldrid.RgbaByte.Red);
+            var rng = new System.Random();
+            
             SpriteBatch.Begin(SamplerType.Point, Camera.GetViewMatrix());
             Systems.Render(DrawableGroup, SpriteBatch);
             SpriteBatch.End();
