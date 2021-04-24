@@ -70,8 +70,14 @@ namespace LudumDare48
             
             var pipelineTexture = new SimplePipelineTexture2D("fMask", AssetManager.LoadTexture2D("TestMask.png"), SamplerType.Point);
             
+            var uniformBuffer = new SimpleUniformBuffer<float>(ElementGlobals.GraphicsDevice, "MyUniforms", 2, Veldrid.ShaderStages.Fragment);
+            uniformBuffer.SetValue(0, 1f);
+            uniformBuffer.SetValue(1, 2f);
+            uniformBuffer.UpdateBuffer();
+            
             var pipeline = SpriteBatch2D.GetDefaultSimplePipeline(ElementGlobals.GraphicsDevice, MaskTextureTest, shader);
             pipeline.AddPipelineTexture(pipelineTexture);
+            pipeline.AddUniformBuffer(uniformBuffer);
             
             MaskTextureTest.BeginRenderTarget();
             MaskTextureTest.RenderTargetClear(Veldrid.RgbaFloat.Clear);

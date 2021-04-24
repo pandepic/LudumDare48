@@ -5,11 +5,16 @@ layout(set = 0, binding = 0) uniform ProjectionViewBuffer {
     mat4x4 uView;
 };
 
-layout (set = 1, binding = 0) uniform texture2D fTexture;
-layout (set = 1, binding = 1) uniform sampler fTextureSampler;
+layout(set = 1, binding = 0) uniform MyUniforms {
+    float uVal1;
+    float uVal2;
+};
 
-layout (set = 2, binding = 0) uniform texture2D fMask;
-layout (set = 2, binding = 1) uniform sampler fMaskSampler;
+layout (set = 2, binding = 0) uniform texture2D fTexture;
+layout (set = 2, binding = 1) uniform sampler fTextureSampler;
+
+layout (set = 3, binding = 0) uniform texture2D fMask;
+layout (set = 3, binding = 1) uniform sampler fMaskSampler;
 
 layout (location = 0) in vec2 fTexCoords;
 layout (location = 1) in vec4 fColor;
