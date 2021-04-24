@@ -12,7 +12,12 @@ namespace LudumDare48
         Right,
         Jump,
     }
-    
+    public enum ObjectType
+    {
+        Background,
+        Character,
+    }
+
     public struct TransformComponent
     {
         public Entity Parent;
@@ -47,12 +52,32 @@ namespace LudumDare48
         public int Layer;
         public SpriteFlipType FlipType;
     }
-    
+    public struct DrawableMaskComponent
+    {
+        public Rectangle AtlasRect;
+        public Rectangle MaskRect;
+        public Vector2 Origin;
+        public Vector2 Scale;
+        public Texture2D Texture;
+        public Texture2D Mask;
+        public int Layer;
+        public SpriteFlipType FlipType;
+    }
+    public struct DrawableBackgroundComponent
+    {
+        public Rectangle AtlasRect;
+        public Vector2 Origin;
+        public Vector2 Scale;
+        public Texture2D Texture;
+        public int Layer;
+        public ObjectType Type;
+    }
+
     public struct StartMovementComponent
     {
         public MovementType MovementType;
     }
-    
+
     public struct StopMovementComponent
     {
         public MovementType MovementType;
