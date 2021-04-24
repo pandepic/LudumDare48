@@ -16,5 +16,13 @@ namespace LudumDare48
             
             return new Rectangle(transform.TransformedPosition, drawable.AtlasRect.SizeF * drawable.Scale);
         }
+        
+        public static Rectangle GetEntityCollisionRect(Entity entity)
+        {
+            ref var transform = ref entity.GetComponent<TransformComponent>();
+            ref var collider = ref entity.GetComponent<ColliderComponent>();
+            
+            return new Rectangle(collider.CollisionRect.Location.ToVector2() + transform.TransformedPosition, collider.CollisionRect.SizeF);
+        }
     }
 }

@@ -14,6 +14,9 @@ namespace LudumDare48
         public SpriteBatch2D SpriteBatch;
         public Camera2D Camera;
         public SpriteFont Font;
+        public DebugManager DebugManager;
+        
+        public bool ShowDebug = false;
         
         // ECS groups
         public Group DrawableGroup;
@@ -37,6 +40,7 @@ namespace LudumDare48
         {
             SpriteBatch = new SpriteBatch2D();
             Registry = new Registry();
+            DebugManager = new DebugManager(this);
             
             Font = AssetManager.LoadSpriteFont("LatoBlack.ttf");
             
@@ -74,6 +78,9 @@ namespace LudumDare48
             
             var playerRect = EntityUtility.GetEntityDrawRect(Player);
             Camera.Center(playerRect.Center);
+            
+            if (ShowDebug)
+                DebugManager.Update(gameTimer);
         }
         
         public override void Draw(GameTimer gameTimer)
@@ -87,6 +94,9 @@ namespace LudumDare48
             SpriteBatch.Begin(SamplerType.Point);
             SpriteBatch.DrawText(Font, playerRect.Location.ToString(), new Vector2(25), Veldrid.RgbaByte.White, 32, 1);
             SpriteBatch.End();
+            
+            if (ShowDebug)
+                DebugManager.Draw();
         }
         
         public override void HandleGameControl(string controlName, GameControlState state, GameTimer gameTimer)
@@ -142,6 +152,13 @@ namespace LudumDare48
                     {
                         MovementType = MovementType.Right,
                     });
+                }
+                break;
+                
+                case "Debug":
+                if (state == GameControlState.Pressed)
+                {
+                    ShowDebug = !ShowDebug;
                 }
                 break;
             }

@@ -77,11 +77,9 @@ namespace LudumDare48
                     ref var checkColliderTransform = ref checkCollider.GetComponent<TransformComponent>();
                     ref var checkColliderCollider = ref checkCollider.GetComponent<ColliderComponent>();
 
-                    var checkColliderRect = new Rectangle(
-                        checkColliderCollider.CollisionRect.Location.ToVector2() + checkColliderTransform.TransformedPosition,
-                        checkColliderCollider.CollisionRect.SizeF);
-
-                    var entityRect = new Rectangle(collider.CollisionRect.Location.ToVector2() + transform.TransformedPosition, collider.CollisionRect.SizeF);
+                    var checkColliderRect = EntityUtility.GetEntityCollisionRect(checkCollider);
+                    var entityRect = EntityUtility.GetEntityCollisionRect(entity);
+                    
                     var intersect = Rectangle.Intersect(entityRect, checkColliderRect);
 
                     if (intersect.Height <= 0)
@@ -120,11 +118,9 @@ namespace LudumDare48
                     ref var checkColliderTransform = ref checkCollider.GetComponent<TransformComponent>();
                     ref var checkColliderCollider = ref checkCollider.GetComponent<ColliderComponent>();
 
-                    var checkColliderRect = new Rectangle(
-                        checkColliderCollider.CollisionRect.Location.ToVector2() + checkColliderTransform.TransformedPosition,
-                        checkColliderCollider.CollisionRect.SizeF);
-
-                    var entityRect = new Rectangle(collider.CollisionRect.Location.ToVector2() + transform.TransformedPosition, collider.CollisionRect.SizeF);
+                    var checkColliderRect = EntityUtility.GetEntityCollisionRect(checkCollider);
+                    var entityRect = EntityUtility.GetEntityCollisionRect(entity);
+                    
                     var intersect = Rectangle.Intersect(entityRect, checkColliderRect);
 
                     if (intersect.Width <= 0)

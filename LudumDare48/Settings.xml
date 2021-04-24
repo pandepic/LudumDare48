@@ -16,6 +16,8 @@
     <Setting Name="MoveLeft" Value="A,Left" Type="Keyboard" />
     <Setting Name="MoveRight" Value="D,Right" Type="Keyboard" />
     
+    <Setting Name="Debug" Value="Tilde" Type="Keyboard" />
+    
     <!-- <Setting Name="Interact" Value="Right" Type="Mouse" /> -->
   </Section>
 </Settings>
