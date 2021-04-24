@@ -22,8 +22,8 @@ namespace LudumDare48
             
             player.TryAddComponent(new PhysicsComponent()
             {
-                MaxSpeed = new Vector2(200, 400),
-                MoveSpeed = 200f,
+                MaxSpeed = new Vector2(400, 400),
+                MoveSpeed = 400f,
                 JumpSpeed = 550f,
                 Acceleration = Vector2.Zero,
                 Velocity = Vector2.Zero,

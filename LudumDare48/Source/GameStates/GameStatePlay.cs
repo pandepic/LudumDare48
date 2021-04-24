@@ -6,7 +6,7 @@ namespace LudumDare48
 {
     public class GameStatePlay : GameState
     {
-        public const float GRAVITY = 100f;
+        public const float GRAVITY = 1000f;
         public const float MOVE_STEP = 8f;
         
         public Game Game;

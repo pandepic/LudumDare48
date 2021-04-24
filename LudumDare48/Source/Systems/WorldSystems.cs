@@ -41,7 +41,7 @@ namespace LudumDare48
                         break;
                     
                     case MovementType.Jump:
-                        physics.Acceleration.Y = -physics.JumpSpeed;
+                        physics.Velocity.Y = -physics.JumpSpeed;
                         break;
                 }
                 
