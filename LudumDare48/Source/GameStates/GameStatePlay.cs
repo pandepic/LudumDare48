@@ -1,3 +1,4 @@
+using System.IO;
 using System.Numerics;
 using ElementEngine;
 using ElementEngine.ECS;
@@ -30,6 +31,8 @@ namespace LudumDare48
         // Special entities
         public Entity Player;
         
+        public Texture2D MaskTextureTest;
+        
         public GameStatePlay(Game game)
         {
             Game = game;
@@ -57,8 +60,20 @@ namespace LudumDare48
             Player = EntityBuilder.CreatePlayer(new Vector2(50, 50));
             
             EntityBuilder.CreatePlatform(new Vector2(25, 500));
+            
+            MaskTextureTest = new Texture2D(200, 200);
+            MaskTextureTest.BeginRenderTarget();
+            MaskTextureTest.RenderTargetClear(Veldrid.RgbaFloat.Clear);
+            MaskTextureTest.EndRenderTarget();
+            
+            var shader = new SimpleShader(ElementGlobals.GraphicsDevice,
+                File.ReadAllText(AssetManager.GetAssetPath("testmask.vert")),
+                File.ReadAllText(AssetManager.GetAssetPath("testmask.frag")),
+                ElementEngine.Vertex2DPositionTexCoordsColor.VertexLayout);
+            
+            var pipeline = SpriteBatch2D.GetDefaultSimplePipeline(ElementGlobals.GraphicsDevice, MaskTextureTest, shader);
         }
-
+        
         // called every time the state loads
         public override void Load()
         {
