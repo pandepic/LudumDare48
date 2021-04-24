@@ -13,8 +13,16 @@ namespace LudumDare48
         {
             foreach (var entity in group.Entities)
             {
-                entity.RemoveComponent<DeathTag>();
-                group.Registry.DestroyEntity(entity);
+                if (entity.HasComponent<PlayerTag>())
+                {
+                    entity.RemoveComponent<DeathTag>();
+                    ref var transform = ref entity.GetComponent<TransformComponent>();
+                    transform.Position = new Vector2(50, 50);
+                }
+                else
+                {
+                    group.Registry.DestroyEntity(entity);
+                }
             }
         }
         

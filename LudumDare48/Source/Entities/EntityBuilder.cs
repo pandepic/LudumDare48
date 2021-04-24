@@ -46,6 +46,8 @@ namespace LudumDare48
                 CollisionRect = new Rectangle(0, 0, 50, 50),
             });
             
+            player.TryAddComponent(new PlayerTag());
+            
             return player;
             
         } // CreatePlayer
