@@ -27,7 +27,7 @@ namespace LudumDare48
                 JumpSpeed = 550f,
                 Acceleration = Vector2.Zero,
                 Velocity = Vector2.Zero,
-                IsFalling = false,
+                IsFalling = true,
             });
             
             player.TryAddComponent(new DrawableComponent()

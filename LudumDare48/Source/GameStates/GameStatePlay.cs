@@ -7,12 +7,13 @@ namespace LudumDare48
     public class GameStatePlay : GameState
     {
         public const float GRAVITY = 1000f;
-        public const float MOVE_STEP = 8f;
+        public const int MOVE_STEP = 8;
         
         public Game Game;
         public Registry Registry;
         public SpriteBatch2D SpriteBatch;
         public Camera2D Camera;
+        public SpriteFont Font;
         
         // ECS groups
         public Group DrawableGroup;
@@ -36,6 +37,8 @@ namespace LudumDare48
         {
             SpriteBatch = new SpriteBatch2D();
             Registry = new Registry();
+            
+            Font = AssetManager.LoadSpriteFont("LatoBlack.ttf");
             
             DrawableGroup = Registry.RegisterGroup<TransformComponent, DrawableComponent>();
             PhysicsGroup = Registry.RegisterGroup<TransformComponent, PhysicsComponent>();
@@ -70,16 +73,19 @@ namespace LudumDare48
             Registry.SystemsFinished();
             
             var playerRect = EntityUtility.GetEntityDrawRect(Player);
-            //Camera.Center(playerRect.Center);
+            Camera.Center(playerRect.Center);
         }
         
         public override void Draw(GameTimer gameTimer)
         {
-            var test = new Texture2D(50, 50, Veldrid.RgbaByte.Red);
-            var rng = new System.Random();
+            var playerRect = EntityUtility.GetEntityDrawRect(Player);
             
             SpriteBatch.Begin(SamplerType.Point, Camera.GetViewMatrix());
             Systems.Render(DrawableGroup, SpriteBatch);
+            SpriteBatch.End();
+            
+            SpriteBatch.Begin(SamplerType.Point);
+            SpriteBatch.DrawText(Font, playerRect.Location.ToString(), new Vector2(25), Veldrid.RgbaByte.White, 32, 1);
             SpriteBatch.End();
         }
         
@@ -90,10 +96,15 @@ namespace LudumDare48
                 case "MoveUp":
                 if (state == GameControlState.Pressed)
                 {
-                    Player.TryAddComponent(new StartMovementComponent()
+                    ref var physics = ref Player.GetComponent<PhysicsComponent>();
+                    
+                    if (!physics.IsFalling)
                     {
-                        MovementType = MovementType.Jump,
-                    });
+                        Player.TryAddComponent(new StartMovementComponent()
+                        {
+                            MovementType = MovementType.Jump,
+                        });
+                    }
                 }
                 break;
                 

@@ -18,6 +18,7 @@ namespace LudumDare48
         public float JumpSpeed;
         public Vector2 Acceleration;
         public Vector2 Velocity;
+        public Vector2 MoveAmount;
         public Vector2 MaxSpeed;
         public bool IsFalling;
     }

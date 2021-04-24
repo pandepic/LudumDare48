@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Numerics;
 using ElementEngine;
@@ -9,7 +10,7 @@ namespace LudumDare48
 {
     public static partial class Systems
     {
-        public static void Physics(Group physicsGroup, Group colliderGroup, GameTimer gameTimer, float gravity, float moveStep)
+        public static void Physics(Group physicsGroup, Group colliderGroup, GameTimer gameTimer, float gravity, int moveStep)
         {
             foreach (var entity in physicsGroup.Entities)
             {
@@ -32,7 +33,7 @@ namespace LudumDare48
 
         } // Physics
 
-        private static void CollisionMovement(Entity entity, ref TransformComponent transform, ref PhysicsComponent physics, Group colliderGroup, GameTimer gameTimer, float moveStep)
+        private static void CollisionMovement(Entity entity, ref TransformComponent transform, ref PhysicsComponent physics, Group colliderGroup, GameTimer gameTimer, int moveStep)
         {
             ref var collider = ref entity.GetComponent<ColliderComponent>();
 
@@ -43,12 +44,20 @@ namespace LudumDare48
             var directionX = -1f;
             if (physics.Velocity.X > 0)
                 directionX = 1f;
-
-            var movement = physics.Velocity * gameTimer.DeltaS;
+            
+            physics.MoveAmount += physics.Velocity * gameTimer.DeltaS;
+            
+            var movement = physics.MoveAmount.ToVector2I();
+            
+            if (movement == Vector2I.Zero)
+                return;
+            
             if (movement.X < 0)
-                movement.X *= -1f;
+                movement.X *= -1;
             if (movement.Y < 0)
-                movement.Y *= -1f;
+                movement.Y *= -1;
+            
+            physics.IsFalling = true;
             
             while (movement.Y > 0)
             {
@@ -57,10 +66,9 @@ namespace LudumDare48
                     step = movement.Y;
 
                 movement.Y -= step;
-
+                physics.MoveAmount.Y -= step * directionY;
                 transform.Position.Y += step * directionY;
-                physics.IsFalling = true;
-
+                
                 foreach (var checkCollider in colliderGroup.Entities)
                 {
                     if (checkCollider == entity)
@@ -101,7 +109,7 @@ namespace LudumDare48
                     step = movement.X;
 
                 movement.X -= step;
-
+                physics.MoveAmount.X -= step * directionX;
                 transform.Position.X += step * directionX;
 
                 foreach (var checkCollider in colliderGroup.Entities)
@@ -135,6 +143,9 @@ namespace LudumDare48
                     }
                 }
             }
+            
+            // if (prevPosition.ToVector2I().Y == prevPosition.ToVector2I().Y)
+            //     physics.IsFalling = false;
         } // CollisionMovement
     }
 }
