@@ -1,0 +1,10 @@
+2021-04-24 11:28:11.886 +10:00 [INF] [SettingsManager] (Window) loaded setting Width - 1600
+2021-04-24 11:28:11.902 +10:00 [INF] [SettingsManager] (Window) loaded setting Height - 900
+2021-04-24 11:28:11.902 +10:00 [INF] [SettingsManager] (Window) loaded setting Fullscreen - false
+2021-04-24 11:28:11.902 +10:00 [INF] [SettingsManager] (Sound) loaded setting MasterVolume - 0
+2021-04-24 11:28:11.902 +10:00 [INF] [SettingsManager] (Sound) loaded setting MusicVolume - 0.5
+2021-04-24 11:28:11.903 +10:00 [INF] [SettingsManager] (Sound) loaded setting SFXVolume - 0.5
+2021-04-24 11:28:11.903 +10:00 [INF] [SettingsManager] (Sound) loaded setting UIVolume - 0.5
+2021-04-24 11:28:11.903 +10:00 [INF] [SettingsManager] loaded 7 settings from Settings.xml in 45.40 ms.
+2021-04-24 11:28:12.369 +10:00 [INF] [AssetManager] 0 mod assets loaded from Content in 3.79 ms.
+2021-04-24 11:28:12.370 +10:00 [INF] [GameControlsManager] loaded 0 controls from Controls in 0.02 ms.

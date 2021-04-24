@@ -1,0 +1,17 @@
+<Settings>
+  <Section Name="Window">
+    <Setting Name="Width" Value="1600" />
+    <Setting Name="Height" Value="900" />
+    <Setting Name="Fullscreen" Value="false" />
+  </Section>
+  <Section Name="Sound">
+    <Setting Name="MasterVolume" Value="0" />
+    <Setting Name="MusicVolume" Value="0.5" />
+    <Setting Name="SFXVolume" Value="0.5" />
+    <Setting Name="UIVolume" Value="0.5" />
+  </Section>
+  <Section Name="Controls">
+    <!-- <Setting Name="MoveUp" Value="W,Up" Type="Keyboard" /> -->
+    <!-- <Setting Name="Interact" Value="Right" Type="Mouse" /> -->
+  </Section>
+</Settings>
