@@ -52,18 +52,26 @@ namespace LudumDare48
 
             player.TryAddComponent(new PlayerTag());
 
+            CreateOverlay(player, "adventurer-bg-04.png", 0.2f);
+            CreateOverlay(player, "adventurer-bg-07.png", 0.2f);
+            CreateOverlay(player, "adventurer-bg-06.png", 0.2f);
+            CreateOverlay(player, "adventurer-bg-05.png", 0.2f);
+            CreateOverlay(player, "adventurer-bg-03.png", 0.2f);
+            CreateOverlay(player, "adventurer-bg-01.png", 0.2f);
+            CreateOverlay(player, "adventurer-bg-02.png", 0.2f);
+
             return player;
 
         } // CreatePlayer
 
-        public static Entity CreatePlayerOverlay(Entity player, string name, float opacity) {
+        public static Entity CreateOverlay(Entity parent, string name, float opacity) {
             var overlay = Registry.CreateEntity();
 
             overlay.TryAddComponent(new OverlayComponent()
             {
                 Texture = AssetManager.LoadTexture2D(name),
                 Opacity = opacity,
-                Parent = player,
+                Parent = parent,
             });
 
             return overlay;
@@ -79,12 +87,15 @@ namespace LudumDare48
                 Rotation = 0f,
             });
 
-            platform.TryAddComponent(new DrawableComponent()
+            var scale = 4f;
+
+            platform.TryAddComponent(new DrawableMaskComponent()
             {
-                Texture = new Texture2D(50, 50, Veldrid.RgbaByte.Blue),
-                AtlasRect = new Rectangle(0, 0, 500, 50),
+                Texture = AssetManager.LoadTexture2D("platform-bg-01.png"),
+                AtlasRect = new Rectangle(22, 34, 89, 38),
+                Mask = AssetManager.LoadTexture2D("platforms-mask.png"),
                 Origin = Vector2.Zero,
-                Scale = new Vector2(1),
+                Scale = new Vector2(scale),
                 Layer = 2,
                 FlipType = SpriteFlipType.None,
             });
@@ -92,8 +103,8 @@ namespace LudumDare48
             platform.TryAddComponent(new ColliderComponent()
             {
                 EventType = ColliderEventType.None,
-                CollisionRect = new Rectangle(0, 0, 500, 50),
-                Scale = new Vector2(1f),
+                CollisionRect = new Rectangle(4, 9, 81, 25),
+                Scale = new Vector2(scale),
             });
 
             return platform;

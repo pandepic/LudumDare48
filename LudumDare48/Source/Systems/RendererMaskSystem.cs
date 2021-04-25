@@ -119,8 +119,11 @@ namespace LudumDare48
                 }
 
                 if (!beginCalled) {
+                    float width = item.Texture.Width;
+                    float height = item.Texture.Height;
+                    float ratio = width / height;
                     beginCalled = true;
-                    currentBuffer.SetValue(0, Matrix4x4.CreateScale(2f, 2f, 1f) * Matrix4x4.CreateTranslation(Camera.Position.X * 0.001f, Camera.Position.Y * 0.001f, 0f));
+                    currentBuffer.SetValue(0, Matrix4x4.CreateScale(2f * ratio, 2f, 1f) * Matrix4x4.CreateTranslation(Camera.Position.X * 0.001f, Camera.Position.Y * 0.001f, 0f));
                     currentBuffer.UpdateBuffer();
                     currentBatch.Begin(SamplerType.Point, Camera.GetViewMatrix());
                 }
@@ -209,8 +212,11 @@ namespace LudumDare48
                 }
 
                 if (!beginCalled) {
+                    float width = item.Texture.Width;
+                    float height = item.Texture.Height;
+                    float ratio = width / height;
                     beginCalled = true;
-                    currentBuffer.SetValue(0, Matrix4x4.CreateScale(2f, 2f, 1f) * Matrix4x4.CreateTranslation(Camera.Position.X * 0.001f, Camera.Position.Y * 0.001f, 0f));
+                    currentBuffer.SetValue(0, Matrix4x4.CreateScale(2f * ratio, 2f, 1f) * Matrix4x4.CreateTranslation(Camera.Position.X * 0.001f, Camera.Position.Y * 0.001f, 0f));
                     currentBuffer.UpdateBuffer();
                     currentBatch.Begin(SamplerType.Point, Camera.GetViewMatrix());
                 }

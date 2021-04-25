@@ -12,7 +12,7 @@ namespace LudumDare48
         public static Rectangle GetEntityDrawRect(Entity entity)
         {
             ref var transform = ref entity.GetComponent<TransformComponent>();
-            ref var drawable = ref entity.GetComponent<DrawableComponent>();
+            ref var drawable = ref entity.GetComponent<DrawableMaskComponent>();
 
             return new Rectangle(transform.TransformedPosition, drawable.AtlasRect.SizeF * drawable.Scale);
         }
