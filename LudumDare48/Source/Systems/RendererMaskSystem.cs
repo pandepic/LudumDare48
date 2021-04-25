@@ -26,7 +26,7 @@ namespace LudumDare48
         }
 
         private static List<DrawMaskItem> _drawMaskItem = new List<DrawMaskItem>();
-        private static Dictionary<string, SpriteBatch2D> _maskBatches = new Dictionary<string, SpriteBatch2D>();
+        private static Dictionary<string, (SpriteBatch2D, SimpleUniformBuffer<Matrix4x4>)> _maskBatches = new Dictionary<string, (SpriteBatch2D, SimpleUniformBuffer<Matrix4x4>)>();
 
         public static void RenderMask(Group group, Camera2D Camera)
         {
@@ -66,6 +66,8 @@ namespace LudumDare48
 
             string lastMask = null;
             SpriteBatch2D currentBatch = null;
+            SimpleUniformBuffer<Matrix4x4> currentBuffer = null;
+
             bool beginCalled = false;
 
             foreach (var item in _drawMaskItem) {
@@ -74,8 +76,9 @@ namespace LudumDare48
                     currentBatch.End();
                 }
                 lastMask = item.Texture.TextureName;
-                if (_maskBatches.TryGetValue(item.Texture.TextureName, out SpriteBatch2D batch)) {
-                    currentBatch = batch;
+                if (_maskBatches.TryGetValue(item.Texture.TextureName, out (SpriteBatch2D, SimpleUniformBuffer<Matrix4x4>) batch)) {
+                    currentBatch = batch.Item1;
+                    currentBuffer = batch.Item2;
                 } else {
                     var shader = new SimpleShader(ElementGlobals.GraphicsDevice,
                     File.ReadAllText(AssetManager.GetAssetPath("testmask.vert")),
@@ -84,22 +87,24 @@ namespace LudumDare48
 
                     var pipelineTexture = new SimplePipelineTexture2D("fBg", item.Texture, SamplerType.Point);
 
-                    var uniformBuffer = new SimpleUniformBuffer<Matrix4x4>(ElementGlobals.GraphicsDevice, "MyUniforms", 1, Veldrid.ShaderStages.Fragment);
-                    uniformBuffer.SetValue(0, Camera.GetViewMatrix());
-                    uniformBuffer.UpdateBuffer();
+                    currentBuffer = new SimpleUniformBuffer<Matrix4x4>(ElementGlobals.GraphicsDevice, "MyUniforms", 1, Veldrid.ShaderStages.Fragment);
+                    currentBuffer.SetValue(0, Camera.GetViewMatrix());
+                    currentBuffer.UpdateBuffer();
 
                     var pipeline = SpriteBatch2D.GetDefaultSimplePipeline(ElementGlobals.GraphicsDevice, shader: shader);
                     pipeline.AddPipelineTexture(pipelineTexture);
-                    pipeline.AddUniformBuffer(uniformBuffer);
+                    pipeline.AddUniformBuffer(currentBuffer);
                     var width = ElementGlobals.GraphicsDevice.SwapchainFramebuffer.Width;
                     var height = ElementGlobals.GraphicsDevice.SwapchainFramebuffer.Height;
                     currentBatch = new SpriteBatch2D((int)width, (int)height, ElementGlobals.GraphicsDevice.SwapchainFramebuffer.OutputDescription, pipeline);
 
-                    _maskBatches.Add(item.Texture.TextureName, currentBatch);
+                    _maskBatches.Add(item.Texture.TextureName, (currentBatch, currentBuffer));
                 }
 
                 if (!beginCalled) {
                     beginCalled = true;
+                    currentBuffer.SetValue(0, Matrix4x4.CreateScale(5f, 5f, 1f) * Matrix4x4.CreateTranslation(Camera.Position.X * 0.001f, Camera.Position.Y * 0.001f, 0f));
+                    currentBuffer.UpdateBuffer();
                     currentBatch.Begin(SamplerType.Point, Camera.GetViewMatrix());
                 }
 
