@@ -125,7 +125,7 @@ namespace LudumDare48
             SpriteBatch.End();
             
             SpriteBatch.Begin(SamplerType.Point);
-            SpriteBatch.DrawText(Font, playerRect.Location.ToString(), new Vector2(25), Veldrid.RgbaByte.White, 32, 1);
+            //SpriteBatch.DrawText(Font, playerRect.Location.ToString(), new Vector2(25), Veldrid.RgbaByte.White, 32, 1);
             SpriteBatch.DrawTexture2D(MaskTextureTest, new Vector2(100, 100));
             SpriteBatch.End();
             

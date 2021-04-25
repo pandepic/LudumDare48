@@ -1,0 +1,37 @@
+name: Release to itch.io
+
+on:
+  push:
+    tags:
+    - 'v*'
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+    
+    defaults:
+      run:
+        working-directory: ./LudumDare48
+
+    steps:  
+    - uses: actions/checkout@v2
+      with:
+        repository: pandepic/LudumDare48
+        path: ./LudumDare48
+    - name: Setup .NET 5
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 5.0.100
+    - name: Build Windows
+      run: dotnet publish LudumDare48/LudumDare48.csproj -r win-x64 -c Release --output build-windows
+    - name: Clean NetCoreBeauty
+      run: find . -name 'NetCoreBeauty' -type f -delete
+    - name: Publish Windows build to itch.io
+      uses: josephbmanley/butler-publish-itchio-action@master
+      env:
+        BUTLER_CREDENTIALS: ${{ secrets.BUTLER_CREDENTIALS }}
+        CHANNEL: windows
+        ITCH_GAME: ludumdare48
+        ITCH_USER: pandepic
+        PACKAGE: ./LudumDare48/build-windows
