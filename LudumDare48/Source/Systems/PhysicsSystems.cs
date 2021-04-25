@@ -10,7 +10,7 @@ namespace LudumDare48
 {
     public static partial class Systems
     {
-        public static void Physics(Group physicsGroup, Group colliderGroup, GameTimer gameTimer, float gravity, int moveStep)
+        public static void Physics(Group physicsGroup, Group colliderGroup, GameTimer gameTimer, float gravity, int moveStep, float deathHeight)
         {
             foreach (var entity in physicsGroup.Entities)
             {
@@ -22,13 +22,22 @@ namespace LudumDare48
 
                 if (physics.Velocity.X > physics.MaxSpeed.X)
                     physics.Velocity.X = physics.MaxSpeed.X;
+                if (physics.Velocity.X < -physics.MaxSpeed.X)
+                    physics.Velocity.X = -physics.MaxSpeed.X;
                 if (physics.Velocity.Y > physics.MaxSpeed.Y)
                     physics.Velocity.Y = physics.MaxSpeed.Y;
+                if (physics.Velocity.Y < -physics.MaxSpeed.Y)
+                    physics.Velocity.Y = -physics.MaxSpeed.Y;
 
                 if (!entity.HasComponent<ColliderComponent>())
                     transform.Position += physics.Velocity * gameTimer.DeltaS;
                 else
                     CollisionMovement(entity, ref transform, ref physics, colliderGroup, gameTimer, moveStep);
+                
+                if (transform.TransformedPosition.Y >= deathHeight && entity.HasComponent<PlayerComponent>())
+                {
+                    entity.TryAddComponent(new DeathTag());
+                }
             }
 
         } // Physics
@@ -57,7 +66,8 @@ namespace LudumDare48
             if (movement.Y < 0)
                 movement.Y *= -1;
             
-            physics.IsFalling = true;
+            if (movement.Y > 0)
+                physics.IsFalling = true;
             
             while (movement.Y > 0)
             {

@@ -9,6 +9,7 @@ namespace LudumDare48
     {
         public const float GRAVITY = 1000f;
         public const int MOVE_STEP = 8;
+        public const float DEATH_HEIGHT = 1000f;
 
         public Game Game;
         public Registry Registry;
@@ -43,7 +44,6 @@ namespace LudumDare48
         {
             SpriteBatch = new SpriteBatch2D();
             Registry = new Registry();
-            DebugManager = new DebugManager(this);
 
             Font = AssetManager.LoadSpriteFont("LatoBlack.ttf");
 
@@ -64,8 +64,10 @@ namespace LudumDare48
             EntityBuilder.CreatePlatform(new Vector2(25, 500));
             EntityBuilder.CreatePlatform(new Vector2(500, 400));
             EntityBuilder.CreatePlatform(new Vector2(-500, 400));
+            
+            DebugManager = new DebugManager(this, Player);
         }
-
+        
         // called every time the state loads
         public override void Load()
         {
@@ -74,7 +76,7 @@ namespace LudumDare48
 
         public override void Update(GameTimer gameTimer)
         {
-            Systems.Physics(PhysicsGroup, ColliderGroup, gameTimer, GRAVITY, MOVE_STEP);
+            Systems.Physics(PhysicsGroup, ColliderGroup, gameTimer, GRAVITY, MOVE_STEP, DEATH_HEIGHT);
             Systems.ColliderEvents(ColliderEventGroup);
             Systems.Death(DeathGroup);
             Systems.StartMovement(StartMovementGroup);

@@ -22,8 +22,8 @@ namespace LudumDare48
 
             player.TryAddComponent(new PhysicsComponent()
             {
-                MaxSpeed = new Vector2(400, 400),
-                MoveSpeed = 400f,
+                MaxSpeed = new Vector2(400, 1000),
+                MoveSpeed = 800f,
                 JumpSpeed = 550f,
                 Acceleration = Vector2.Zero,
                 Velocity = Vector2.Zero,
@@ -50,8 +50,11 @@ namespace LudumDare48
                 Scale = new Vector2(scale),
             });
 
-            player.TryAddComponent(new PlayerTag());
-
+            player.TryAddComponent(new PlayerComponent()
+            {
+                RespawnPosition = position,
+            });
+            
             CreateOverlay(player, "adventurer-bg-08.png");
             CreateOverlay(player, "adventurer-bg-04.png");
             CreateOverlay(player, "adventurer-bg-07.png");

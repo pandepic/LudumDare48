@@ -13,11 +13,12 @@ namespace LudumDare48
         {
             foreach (var entity in group.Entities)
             {
-                if (entity.HasComponent<PlayerTag>())
+                if (entity.HasComponent<PlayerComponent>())
                 {
                     entity.RemoveComponent<DeathTag>();
                     ref var transform = ref entity.GetComponent<TransformComponent>();
-                    transform.Position = new Vector2(50, 50);
+                    ref var player = ref entity.GetComponent<PlayerComponent>();
+                    transform.Position = player.RespawnPosition;
                 }
                 else
                 {
