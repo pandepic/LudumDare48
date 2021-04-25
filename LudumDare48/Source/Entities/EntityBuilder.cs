@@ -46,7 +46,7 @@ namespace LudumDare48
             player.TryAddComponent(new ColliderComponent()
             {
                 EventType = ColliderEventType.None,
-                CollisionRect = new Rectangle(200, 70, 11, 29),
+                CollisionRect = new Rectangle(20, 7, 11, 29),
                 Scale = new Vector2(scale),
             });
 
