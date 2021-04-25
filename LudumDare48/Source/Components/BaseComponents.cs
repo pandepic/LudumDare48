@@ -66,6 +66,8 @@ namespace LudumDare48
     {
         public Entity Parent;
         public float Opacity;
+        public float Factor;
+        public float Scale;
         public Texture2D Texture;
     }
 

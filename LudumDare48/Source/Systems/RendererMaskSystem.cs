@@ -37,6 +37,8 @@ namespace LudumDare48
             public int Layer;
             public RgbaFloat Color;
             public SpriteFlipType FlipType;
+            public float OverlayFactor;
+            public float OverlayScale;
         }
 
         private static List<DrawMaskItem> _drawMaskItem = new List<DrawMaskItem>();
@@ -47,9 +49,9 @@ namespace LudumDare48
         {
             foreach (var entity in group.Entities)
             {
-                ref var opacity = ref entity.GetComponent<OverlayComponent>();
-                ref var transform = ref opacity.Parent.GetComponent<TransformComponent>();
-                ref var drawable = ref opacity.Parent.GetComponent<DrawableMaskComponent>();
+                ref var overlay = ref entity.GetComponent<OverlayComponent>();
+                ref var transform = ref overlay.Parent.GetComponent<TransformComponent>();
+                ref var drawable = ref overlay.Parent.GetComponent<DrawableMaskComponent>();
 
                 _drawOverlayItem.Add(new DrawOverlayItem()
                 {
@@ -57,13 +59,15 @@ namespace LudumDare48
                     Origin = drawable.Origin,
                     Scale = drawable.Scale,
                     Rotation = transform.Rotation,
-                    Opacity = opacity.Opacity,
+                    Opacity = overlay.Opacity,
                     SourceRect = drawable.AtlasRect,
-                    Texture = opacity.Texture,
+                    Texture = overlay.Texture,
                     Mask = drawable.Mask,
                     Layer = drawable.Layer,
                     Color = RgbaFloat.White,
                     FlipType = drawable.FlipType,
+                    OverlayFactor = overlay.Factor,
+                    OverlayScale = overlay.Scale,
                 });
             }
 
@@ -123,7 +127,7 @@ namespace LudumDare48
                     float height = item.Texture.Height;
                     float ratio = width / height;
                     beginCalled = true;
-                    currentBuffer.SetValue(0, Matrix4x4.CreateScale(2f * ratio, 2f, 1f) * Matrix4x4.CreateTranslation(Camera.Position.X * 0.001f, Camera.Position.Y * 0.001f, 0f));
+                    currentBuffer.SetValue(0, Matrix4x4.CreateScale(item.OverlayScale * ratio, item.OverlayScale, 1f) * Matrix4x4.CreateTranslation(Camera.Position.X * item.OverlayFactor, Camera.Position.Y * item.OverlayFactor, 0f));
                     currentBuffer.UpdateBuffer();
                     currentBatch.Begin(SamplerType.Point, Camera.GetViewMatrix());
                 }
@@ -198,7 +202,7 @@ namespace LudumDare48
                     var pipelineTexture = new SimplePipelineTexture2D("fBg", item.Texture, SamplerType.Point);
 
                     currentBuffer = new SimpleUniformBuffer<Matrix4x4>(ElementGlobals.GraphicsDevice, "MyUniforms", 1, Veldrid.ShaderStages.Fragment);
-                    currentBuffer.SetValue(0, Camera.GetViewMatrix());
+                    currentBuffer.SetValue(0, Matrix4x4.Identity);
                     currentBuffer.UpdateBuffer();
 
                     var pipeline = SpriteBatch2D.GetDefaultSimplePipeline(ElementGlobals.GraphicsDevice, shader: shader);
@@ -212,12 +216,7 @@ namespace LudumDare48
                 }
 
                 if (!beginCalled) {
-                    float width = item.Texture.Width;
-                    float height = item.Texture.Height;
-                    float ratio = width / height;
                     beginCalled = true;
-                    currentBuffer.SetValue(0, Matrix4x4.CreateScale(2f * ratio, 2f, 1f) * Matrix4x4.CreateTranslation(Camera.Position.X * 0.001f, Camera.Position.Y * 0.001f, 0f));
-                    currentBuffer.UpdateBuffer();
                     currentBatch.Begin(SamplerType.Point, Camera.GetViewMatrix());
                 }
 

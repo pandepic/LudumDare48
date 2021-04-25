@@ -34,7 +34,7 @@ namespace LudumDare48
 
             player.TryAddComponent(new DrawableMaskComponent()
             {
-                Texture = AssetManager.LoadTexture2D("adventurer-bg-08.png"),
+                Texture = new Texture2D(50, 50, Veldrid.RgbaByte.White),
                 AtlasRect = new Rectangle(0, 0, 50, 37),
                 Mask = AssetManager.LoadTexture2D("adventurer.png"),
                 Origin = Vector2.Zero,
@@ -52,19 +52,20 @@ namespace LudumDare48
 
             player.TryAddComponent(new PlayerTag());
 
-            CreateOverlay(player, "adventurer-bg-04.png", 0.2f);
-            CreateOverlay(player, "adventurer-bg-07.png", 0.2f);
-            CreateOverlay(player, "adventurer-bg-06.png", 0.2f);
-            CreateOverlay(player, "adventurer-bg-05.png", 0.2f);
-            CreateOverlay(player, "adventurer-bg-03.png", 0.2f);
-            CreateOverlay(player, "adventurer-bg-01.png", 0.2f);
-            CreateOverlay(player, "adventurer-bg-02.png", 0.2f);
+            CreateOverlay(player, "adventurer-bg-08.png");
+            CreateOverlay(player, "adventurer-bg-04.png");
+            CreateOverlay(player, "adventurer-bg-07.png");
+            CreateOverlay(player, "adventurer-bg-06.png");
+            CreateOverlay(player, "adventurer-bg-05.png");
+            CreateOverlay(player, "adventurer-bg-03.png");
+            CreateOverlay(player, "adventurer-bg-01.png");
+            CreateOverlay(player, "adventurer-bg-02.png");
 
             return player;
 
         } // CreatePlayer
 
-        public static Entity CreateOverlay(Entity parent, string name, float opacity) {
+        public static Entity CreateOverlay(Entity parent, string name, float opacity = 0.2f, float factor = 0.001f, float scale = 2f) {
             var overlay = Registry.CreateEntity();
 
             overlay.TryAddComponent(new OverlayComponent()
@@ -72,6 +73,8 @@ namespace LudumDare48
                 Texture = AssetManager.LoadTexture2D(name),
                 Opacity = opacity,
                 Parent = parent,
+                Factor = factor,
+                Scale = scale,
             });
 
             return overlay;
@@ -91,7 +94,7 @@ namespace LudumDare48
 
             platform.TryAddComponent(new DrawableMaskComponent()
             {
-                Texture = AssetManager.LoadTexture2D("platform-bg-01.png"),
+                Texture = new Texture2D(50, 50, Veldrid.RgbaByte.White),
                 AtlasRect = new Rectangle(22, 34, 89, 38),
                 Mask = AssetManager.LoadTexture2D("platforms-mask.png"),
                 Origin = Vector2.Zero,
@@ -107,17 +110,18 @@ namespace LudumDare48
                 Scale = new Vector2(scale),
             });
 
-            CreateOverlay(platform, "platform-bg-02.png", 0.2f);
-            CreateOverlay(platform, "platform-bg-03.png", 0.2f);
-            CreateOverlay(platform, "platform-bg-04.png", 0.2f);
-            CreateOverlay(platform, "platform-bg-05.png", 0.2f);
-            CreateOverlay(platform, "platform-bg-06.png", 0.2f);
-            CreateOverlay(platform, "platform-bg-07.png", 0.2f);
-            CreateOverlay(platform, "platform-bg-08.png", 0.2f);
-            CreateOverlay(platform, "platform-bg-09.png", 0.2f);
-            CreateOverlay(platform, "platform-bg-10.png", 0.2f);
-            CreateOverlay(platform, "platform-bg-11.png", 0.2f);
-            CreateOverlay(platform, "platform-bg-12.png", 0.2f);
+            CreateOverlay(platform, "platform-bg-01.png");
+            CreateOverlay(platform, "platform-bg-02.png");
+            CreateOverlay(platform, "platform-bg-03.png");
+            CreateOverlay(platform, "platform-bg-04.png");
+            CreateOverlay(platform, "platform-bg-05.png");
+            CreateOverlay(platform, "platform-bg-06.png");
+            CreateOverlay(platform, "platform-bg-07.png");
+            CreateOverlay(platform, "platform-bg-08.png");
+            CreateOverlay(platform, "platform-bg-09.png");
+            CreateOverlay(platform, "platform-bg-10.png");
+            CreateOverlay(platform, "platform-bg-11.png");
+            CreateOverlay(platform, "platform-bg-12.png");
 
             return platform;
 
