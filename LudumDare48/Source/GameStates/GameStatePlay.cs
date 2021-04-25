@@ -31,9 +31,7 @@ namespace LudumDare48
 
         // Special entities
         public Entity Player;
-
-        public Texture2D MaskTextureTest;
-
+        
         public GameStatePlay(Game game)
         {
             Game = game;
@@ -62,35 +60,6 @@ namespace LudumDare48
             Player = EntityBuilder.CreatePlayer(new Vector2(50, 50));
 
             EntityBuilder.CreatePlatform(new Vector2(25, 500));
-
-            MaskTextureTest = new Texture2D(266, 200);
-
-            var shader = new SimpleShader(ElementGlobals.GraphicsDevice,
-                File.ReadAllText(AssetManager.GetAssetPath("testmask.vert")),
-                File.ReadAllText(AssetManager.GetAssetPath("testmask.frag")),
-                ElementEngine.Vertex2DPositionTexCoordsColor.VertexLayout);
-
-            var pipelineTexture = new SimplePipelineTexture2D("fBg", AssetManager.LoadTexture2D("TestBG.png"), SamplerType.Point);
-
-            var uniformBuffer = new SimpleUniformBuffer<Matrix4x4>(ElementGlobals.GraphicsDevice, "MyUniforms", 1, Veldrid.ShaderStages.Fragment);
-            uniformBuffer.SetValue(0, Matrix4x4.Identity);
-            uniformBuffer.UpdateBuffer();
-
-            var pipeline = SpriteBatch2D.GetDefaultSimplePipeline(ElementGlobals.GraphicsDevice, MaskTextureTest, shader);
-            pipeline.AddPipelineTexture(pipelineTexture);
-            pipeline.AddUniformBuffer(uniformBuffer);
-
-            MaskTextureTest.BeginRenderTarget();
-            MaskTextureTest.RenderTargetClear(Veldrid.RgbaFloat.Clear);
-
-            using (var sb = new SpriteBatch2D(266, 200, MaskTextureTest.GetFramebuffer().OutputDescription, pipeline))
-            {
-                sb.Begin(SamplerType.Point);
-                sb.DrawTexture2D(AssetManager.LoadTexture2D("TestMask.png"), Vector2.Zero);
-                sb.End();
-            }
-
-            MaskTextureTest.EndRenderTarget();
         }
 
         // called every time the state loads
@@ -129,7 +98,6 @@ namespace LudumDare48
 
             SpriteBatch.Begin(SamplerType.Point);
             //SpriteBatch.DrawText(Font, playerRect.Location.ToString(), new Vector2(25), Veldrid.RgbaByte.White, 32, 1);
-            SpriteBatch.DrawTexture2D(MaskTextureTest, new Vector2(100, 100));
             SpriteBatch.End();
 
             if (ShowDebug)
