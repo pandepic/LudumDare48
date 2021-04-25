@@ -107,6 +107,18 @@ namespace LudumDare48
                 Scale = new Vector2(scale),
             });
 
+            CreateOverlay(platform, "platform-bg-02.png", 0.2f);
+            CreateOverlay(platform, "platform-bg-03.png", 0.2f);
+            CreateOverlay(platform, "platform-bg-04.png", 0.2f);
+            CreateOverlay(platform, "platform-bg-05.png", 0.2f);
+            CreateOverlay(platform, "platform-bg-06.png", 0.2f);
+            CreateOverlay(platform, "platform-bg-07.png", 0.2f);
+            CreateOverlay(platform, "platform-bg-08.png", 0.2f);
+            CreateOverlay(platform, "platform-bg-09.png", 0.2f);
+            CreateOverlay(platform, "platform-bg-10.png", 0.2f);
+            CreateOverlay(platform, "platform-bg-11.png", 0.2f);
+            CreateOverlay(platform, "platform-bg-12.png", 0.2f);
+
             return platform;
 
         } // CreatePlatform
