@@ -18,6 +18,7 @@ jobs:
     - uses: actions/checkout@v2
       with:
         repository: pandepic/LudumDare48
+        submodules: recursive
         path: ./LudumDare48
     - name: Setup .NET 5
       uses: actions/setup-dotnet@v1
