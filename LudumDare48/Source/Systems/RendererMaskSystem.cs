@@ -122,7 +122,7 @@ namespace LudumDare48
                     beginCalled = true;
                     currentBuffer.SetValue(0, Matrix4x4.CreateScale(2f, 2f, 1f) * Matrix4x4.CreateTranslation(Camera.Position.X * 0.001f, Camera.Position.Y * 0.001f, 0f));
                     currentBuffer.UpdateBuffer();
-                    currentBatch.Begin(SamplerType.Linear, Camera.GetViewMatrix());
+                    currentBatch.Begin(SamplerType.Point, Camera.GetViewMatrix());
                 }
 
                 currentBatch.DrawTexture2D(item.Mask, item.Position, sourceRect: item.SourceRect, scale: item.Scale, origin: item.Origin, rotation: item.Rotation, color: new RgbaFloat(1f, 1f, 1f, item.Opacity));
@@ -212,7 +212,7 @@ namespace LudumDare48
                     beginCalled = true;
                     currentBuffer.SetValue(0, Matrix4x4.CreateScale(2f, 2f, 1f) * Matrix4x4.CreateTranslation(Camera.Position.X * 0.001f, Camera.Position.Y * 0.001f, 0f));
                     currentBuffer.UpdateBuffer();
-                    currentBatch.Begin(SamplerType.Linear, Camera.GetViewMatrix());
+                    currentBatch.Begin(SamplerType.Point, Camera.GetViewMatrix());
                 }
 
                 currentBatch.DrawTexture2D(item.Mask, item.Position, sourceRect: item.SourceRect, scale: item.Scale, origin: item.Origin, rotation: item.Rotation, color: item.Color);

@@ -26,5 +26,7 @@ void main()
 
     if (testMask.x < 0.5) { discard; }
 
-    fFragColor = texture(sampler2D(fBg, fBgSampler), (uUVTransform * vec4(fTexCoords.x, fTexCoords.y, 0.0, 1.0)).xy) * fColor;
+    vec4 diffuse = texture(sampler2D(fBg, fBgSampler), (uUVTransform * vec4(fTexCoords.x, fTexCoords.y, 0.0, 1.0)).xy);
+
+    fFragColor = vec4(diffuse.r, diffuse.g, diffuse.b, fColor.a);
 }

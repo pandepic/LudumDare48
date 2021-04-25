@@ -62,14 +62,16 @@ namespace LudumDare48
             Player = EntityBuilder.CreatePlayer(new Vector2(50, 50));
 
             EntityBuilder.CreatePlatform(new Vector2(25, 500));
+            EntityBuilder.CreatePlatform(new Vector2(500, 400));
+            EntityBuilder.CreatePlatform(new Vector2(-500, 400));
 
-            EntityBuilder.CreatePlayerOverlay(Player, "adventurer-bg-02.png", 0.3f);
-            EntityBuilder.CreatePlayerOverlay(Player, "adventurer-bg-03.png", 0.3f);
-            EntityBuilder.CreatePlayerOverlay(Player, "adventurer-bg-04.png", 0.3f);
-            EntityBuilder.CreatePlayerOverlay(Player, "adventurer-bg-05.png", 0.3f);
-            EntityBuilder.CreatePlayerOverlay(Player, "adventurer-bg-06.png", 0.3f);
-            EntityBuilder.CreatePlayerOverlay(Player, "adventurer-bg-07.png", 0.3f);
-            EntityBuilder.CreatePlayerOverlay(Player, "adventurer-bg-08.png", 0.3f);
+            EntityBuilder.CreatePlayerOverlay(Player, "adventurer-bg-04.png", 0.2f);
+            EntityBuilder.CreatePlayerOverlay(Player, "adventurer-bg-07.png", 0.2f);
+            EntityBuilder.CreatePlayerOverlay(Player, "adventurer-bg-06.png", 0.2f);
+            EntityBuilder.CreatePlayerOverlay(Player, "adventurer-bg-05.png", 0.2f);
+            EntityBuilder.CreatePlayerOverlay(Player, "adventurer-bg-03.png", 0.2f);
+            EntityBuilder.CreatePlayerOverlay(Player, "adventurer-bg-01.png", 0.2f);
+            EntityBuilder.CreatePlayerOverlay(Player, "adventurer-bg-02.png", 0.2f);
         }
 
         // called every time the state loads

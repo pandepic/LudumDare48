@@ -34,7 +34,7 @@ namespace LudumDare48
 
             player.TryAddComponent(new DrawableMaskComponent()
             {
-                Texture = AssetManager.LoadTexture2D("adventurer-bg-01.png"),
+                Texture = AssetManager.LoadTexture2D("adventurer-bg-08.png"),
                 AtlasRect = new Rectangle(0, 0, 50, 37),
                 Mask = AssetManager.LoadTexture2D("adventurer.png"),
                 Origin = Vector2.Zero,
@@ -46,7 +46,7 @@ namespace LudumDare48
             player.TryAddComponent(new ColliderComponent()
             {
                 EventType = ColliderEventType.None,
-                CollisionRect = new Rectangle(0, 0, 50, 37),
+                CollisionRect = new Rectangle(200, 70, 11, 29),
                 Scale = new Vector2(scale),
             });
 
