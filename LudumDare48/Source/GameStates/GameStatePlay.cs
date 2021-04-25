@@ -30,6 +30,8 @@ namespace LudumDare48
         public Group DeathGroup;
         public Group StartMovementGroup;
         public Group StopMovementGroup;
+        public Group SpriteAnimationGroup;
+        public Group PlayerAnimationGroup;
 
         // Special entities
         public Entity Player;
@@ -56,6 +58,8 @@ namespace LudumDare48
             DeathGroup = Registry.RegisterGroup<DeathTag>();
             StartMovementGroup = Registry.RegisterGroup<StartMovementComponent, PhysicsComponent, DrawableMaskComponent>();
             StopMovementGroup = Registry.RegisterGroup<StopMovementComponent, PhysicsComponent, DrawableMaskComponent>();
+            SpriteAnimationGroup = Registry.RegisterGroup<SpriteAnimationComponent, SpriteComponent, DrawableMaskComponent>();
+            PlayerAnimationGroup = Registry.RegisterGroup<PlayerAnimationComponent, SpriteAnimationComponent, SpriteComponent>();
 
             EntityBuilder.Registry = Registry;
 
@@ -81,6 +85,8 @@ namespace LudumDare48
             Systems.Death(DeathGroup);
             Systems.StartMovement(StartMovementGroup);
             Systems.StopMovement(StopMovementGroup);
+            Systems.SpriteAnimation(SpriteAnimationGroup, gameTimer);
+            Systems.PlayerAnimation(PlayerAnimationGroup);
 
             // process removal queues for entities and components
             Registry.SystemsFinished();

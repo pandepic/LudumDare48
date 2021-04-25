@@ -132,7 +132,7 @@ namespace LudumDare48
                     currentBatch.Begin(SamplerType.Point, Camera.GetViewMatrix());
                 }
 
-                currentBatch.DrawTexture2D(item.Mask, item.Position, sourceRect: item.SourceRect, scale: item.Scale, origin: item.Origin, rotation: item.Rotation, color: new RgbaFloat(1f, 1f, 1f, item.Opacity));
+                currentBatch.DrawTexture2D(item.Mask, item.Position, sourceRect: item.SourceRect, scale: item.Scale, origin: item.Origin, rotation: item.Rotation, color: new RgbaFloat(1f, 1f, 1f, item.Opacity), flip: item.FlipType);
             }
             if (beginCalled) {
                 beginCalled = false;
@@ -220,7 +220,7 @@ namespace LudumDare48
                     currentBatch.Begin(SamplerType.Point, Camera.GetViewMatrix());
                 }
 
-                currentBatch.DrawTexture2D(item.Mask, item.Position, sourceRect: item.SourceRect, scale: item.Scale, origin: item.Origin, rotation: item.Rotation, color: item.Color);
+                currentBatch.DrawTexture2D(item.Mask, item.Position, sourceRect: item.SourceRect, scale: item.Scale, origin: item.Origin, rotation: item.Rotation, color: item.Color, flip: item.FlipType);
             }
             if (beginCalled) {
                 beginCalled = false;

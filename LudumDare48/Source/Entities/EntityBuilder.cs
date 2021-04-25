@@ -13,6 +13,7 @@ namespace LudumDare48
         public static Entity CreatePlayer(Vector2 position)
         {
             var player = Registry.CreateEntity();
+            var spritesheet = AssetManager.LoadTexture2D("adventurer.png");
 
             player.TryAddComponent(new TransformComponent()
             {
@@ -36,7 +37,7 @@ namespace LudumDare48
             {
                 Texture = new Texture2D(50, 50, Veldrid.RgbaByte.White),
                 AtlasRect = new Rectangle(0, 0, 50, 37),
-                Mask = AssetManager.LoadTexture2D("adventurer.png"),
+                Mask = spritesheet,
                 Origin = Vector2.Zero,
                 Scale = new Vector2(scale),
                 Layer = 2,
@@ -55,6 +56,14 @@ namespace LudumDare48
                 RespawnPosition = position,
             });
             
+            player.TryAddComponent(new SpriteComponent()
+            {
+                FrameSize = new Vector2I(50, 37),
+                Size = spritesheet.Size,
+            });
+            
+            player.TryAddComponent(new PlayerAnimationComponent());
+            
             CreateOverlay(player, "adventurer-bg-08.png");
             CreateOverlay(player, "adventurer-bg-04.png");
             CreateOverlay(player, "adventurer-bg-07.png");
@@ -63,6 +72,8 @@ namespace LudumDare48
             CreateOverlay(player, "adventurer-bg-03.png");
             CreateOverlay(player, "adventurer-bg-01.png");
             CreateOverlay(player, "adventurer-bg-02.png");
+            
+            EntityUtility.PlaySpriteAnimation(player, AnimationType.Idle);
 
             return player;
 
