@@ -55,7 +55,6 @@ namespace LudumDare48
     public struct DrawableMaskComponent
     {
         public Rectangle AtlasRect;
-        public Rectangle MaskRect;
         public Vector2 Origin;
         public Vector2 Scale;
         public Texture2D Texture;
@@ -63,14 +62,11 @@ namespace LudumDare48
         public int Layer;
         public SpriteFlipType FlipType;
     }
-    public struct DrawableBackgroundComponent
+    public struct OverlayComponent
     {
-        public Rectangle AtlasRect;
-        public Vector2 Origin;
-        public Vector2 Scale;
+        public Entity Parent;
+        public float Opacity;
         public Texture2D Texture;
-        public int Layer;
-        public ObjectType Type;
     }
 
     public struct StartMovementComponent

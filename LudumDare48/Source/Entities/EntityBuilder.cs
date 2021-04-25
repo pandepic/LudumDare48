@@ -37,7 +37,6 @@ namespace LudumDare48
                 Texture = AssetManager.LoadTexture2D("adventurer-bg-01.png"),
                 AtlasRect = new Rectangle(0, 0, 50, 37),
                 Mask = AssetManager.LoadTexture2D("adventurer.png"),
-                MaskRect = new Rectangle(0, 0, 50, 37),
                 Origin = Vector2.Zero,
                 Scale = new Vector2(scale),
                 Layer = 2,
@@ -56,6 +55,19 @@ namespace LudumDare48
             return player;
 
         } // CreatePlayer
+
+        public static Entity CreatePlayerOverlay(Entity player, string name, float opacity) {
+            var overlay = Registry.CreateEntity();
+
+            overlay.TryAddComponent(new OverlayComponent()
+            {
+                Texture = AssetManager.LoadTexture2D(name),
+                Opacity = opacity,
+                Parent = player,
+            });
+
+            return overlay;
+        }
 
         public static Entity CreatePlatform(Vector2 position)
         {

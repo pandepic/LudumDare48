@@ -22,6 +22,7 @@ namespace LudumDare48
         // ECS groups
         public Group DrawableGroup;
         public Group DrawableMaskGroup;
+        public Group DrawableOverlayGroup;
         public Group PhysicsGroup;
         public Group ColliderGroup;
         public Group ColliderEventGroup;
@@ -31,7 +32,7 @@ namespace LudumDare48
 
         // Special entities
         public Entity Player;
-        
+
         public GameStatePlay(Game game)
         {
             Game = game;
@@ -48,6 +49,7 @@ namespace LudumDare48
 
             DrawableGroup = Registry.RegisterGroup<TransformComponent, DrawableComponent>();
             DrawableMaskGroup = Registry.RegisterGroup<TransformComponent, DrawableMaskComponent>();
+            DrawableOverlayGroup = Registry.RegisterGroup<OverlayComponent>();
             PhysicsGroup = Registry.RegisterGroup<TransformComponent, PhysicsComponent>();
             ColliderGroup = Registry.RegisterGroup<TransformComponent, ColliderComponent>();
             ColliderEventGroup = Registry.RegisterGroup<ColliderEventComponent>();
@@ -60,6 +62,14 @@ namespace LudumDare48
             Player = EntityBuilder.CreatePlayer(new Vector2(50, 50));
 
             EntityBuilder.CreatePlatform(new Vector2(25, 500));
+
+            EntityBuilder.CreatePlayerOverlay(Player, "adventurer-bg-02.png", 0.3f);
+            EntityBuilder.CreatePlayerOverlay(Player, "adventurer-bg-03.png", 0.3f);
+            EntityBuilder.CreatePlayerOverlay(Player, "adventurer-bg-04.png", 0.3f);
+            EntityBuilder.CreatePlayerOverlay(Player, "adventurer-bg-05.png", 0.3f);
+            EntityBuilder.CreatePlayerOverlay(Player, "adventurer-bg-06.png", 0.3f);
+            EntityBuilder.CreatePlayerOverlay(Player, "adventurer-bg-07.png", 0.3f);
+            EntityBuilder.CreatePlayerOverlay(Player, "adventurer-bg-08.png", 0.3f);
         }
 
         // called every time the state loads
@@ -95,6 +105,7 @@ namespace LudumDare48
             SpriteBatch.End();
 
             Systems.RenderMask(DrawableMaskGroup, Camera);
+            Systems.RenderOverlay(DrawableOverlayGroup, Camera);
 
             SpriteBatch.Begin(SamplerType.Point);
             //SpriteBatch.DrawText(Font, playerRect.Location.ToString(), new Vector2(25), Veldrid.RgbaByte.White, 32, 1);
