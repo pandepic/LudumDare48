@@ -103,6 +103,22 @@ namespace LudumDare48
             return overlay;
         }
 
+        public static Entity CreateBackground(string name, float opacity = 0.2f, float factor = 0.001f, float scale = 2f) {
+            var overlay = Registry.CreateEntity();
+
+            overlay.TryAddComponent(new BackgroundComponent()
+            {
+                Texture = AssetManager.LoadTexture2D(name),
+                AtlasRect = new Rectangle(0, 0, 50, 50),
+                Mask = new Texture2D(50, 50, Veldrid.RgbaByte.White),
+                Opacity = opacity,
+                Factor = factor,
+                Scale = scale,
+            });
+
+            return overlay;
+        }
+
         public static Entity CreatePlatform(Vector2 position, PlatformType type)
         {
             var collisionType = ColliderEventType.None;
@@ -163,5 +179,17 @@ namespace LudumDare48
             return platform;
 
         } // CreatePlatform
+
+        public static void CreateBackgrounds() {
+            CreateBackground("bg-01.jpg");
+            CreateBackground("bg-02.jpg");
+            CreateBackground("bg-03.jpg");
+            CreateBackground("bg-04.jpg");
+            CreateBackground("bg-05.jpg");
+            CreateBackground("bg-06.jpg");
+            CreateBackground("bg-07.jpg");
+            CreateBackground("bg-08.jpg");
+            CreateBackground("bg-09.jpg");
+        }
     }
 }

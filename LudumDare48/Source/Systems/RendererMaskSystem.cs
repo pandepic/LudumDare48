@@ -40,10 +40,109 @@ namespace LudumDare48
             public float OverlayFactor;
             public float OverlayScale;
         }
+        private struct DrawBackgroundItem
+        {
+            public float Opacity;
+            public Rectangle SourceRect;
+            public Texture2D Texture;
+            public Texture2D Mask;
+            public int Layer;
+            public RgbaFloat Color;
+            public SpriteFlipType FlipType;
+            public float OverlayFactor;
+            public float OverlayScale;
+        }
 
         private static List<DrawMaskItem> _drawMaskItem = new List<DrawMaskItem>();
         private static List<DrawOverlayItem> _drawOverlayItem = new List<DrawOverlayItem>();
+        private static List<DrawBackgroundItem> _drawBackgroundItem = new List<DrawBackgroundItem>();
         private static Dictionary<string, (SpriteBatch2D, SimpleUniformBuffer<Matrix4x4>)> _maskBatches = new Dictionary<string, (SpriteBatch2D, SimpleUniformBuffer<Matrix4x4>)>();
+
+        public static void RenderBackground(Group group, Camera2D Camera)
+        {
+            foreach (var entity in group.Entities)
+            {
+                ref var overlay = ref entity.GetComponent<BackgroundComponent>();
+
+                _drawBackgroundItem.Add(new DrawBackgroundItem()
+                {
+                    Opacity = overlay.Opacity,
+                    SourceRect = overlay.AtlasRect,
+                    Texture = overlay.Texture,
+                    Mask = overlay.Mask,
+                    Layer = overlay.Layer,
+                    OverlayFactor = overlay.Factor,
+                    OverlayScale = overlay.Scale,
+                });
+            }
+
+            if (_drawBackgroundItem.Count == 0)
+                return;
+
+            // sort by layer then Y position
+            _drawBackgroundItem.Sort((x, y) =>
+            {
+                var val = x.Layer.CompareTo(y.Layer);
+
+                return val;
+            });
+
+            string lastMask = null;
+            SpriteBatch2D currentBatch = null;
+            SimpleUniformBuffer<Matrix4x4> currentBuffer = null;
+
+            bool beginCalled = false;
+
+            var width = ElementGlobals.GraphicsDevice.SwapchainFramebuffer.Width;
+            var height = ElementGlobals.GraphicsDevice.SwapchainFramebuffer.Height;
+
+            foreach (var item in _drawBackgroundItem) {
+                if (lastMask != item.Texture.TextureName && beginCalled) {
+                    beginCalled = false;
+                    currentBatch.End();
+                }
+                lastMask = item.Texture.TextureName;
+                if (_maskBatches.TryGetValue(item.Texture.TextureName, out (SpriteBatch2D, SimpleUniformBuffer<Matrix4x4>) batch)) {
+                    currentBatch = batch.Item1;
+                    currentBuffer = batch.Item2;
+                } else {
+                    var shader = new SimpleShader(ElementGlobals.GraphicsDevice,
+                    File.ReadAllText(AssetManager.GetAssetPath("mask.vert")),
+                    File.ReadAllText(AssetManager.GetAssetPath("mask.frag")),
+                    ElementEngine.Vertex2DPositionTexCoordsColor.VertexLayout);
+
+                    var pipelineTexture = new SimplePipelineTexture2D("fBg", item.Texture, SamplerType.Point);
+
+                    currentBuffer = new SimpleUniformBuffer<Matrix4x4>(ElementGlobals.GraphicsDevice, "MyUniforms", 1, Veldrid.ShaderStages.Fragment);
+                    currentBuffer.SetValue(0, Camera.GetViewMatrix());
+                    currentBuffer.UpdateBuffer();
+
+                    var pipeline = SpriteBatch2D.GetDefaultSimplePipeline(ElementGlobals.GraphicsDevice, shader: shader);
+                    pipeline.AddPipelineTexture(pipelineTexture);
+                    pipeline.AddUniformBuffer(currentBuffer);
+                    currentBatch = new SpriteBatch2D((int)width, (int)height, ElementGlobals.GraphicsDevice.SwapchainFramebuffer.OutputDescription, pipeline);
+
+                    _maskBatches.Add(item.Texture.TextureName, (currentBatch, currentBuffer));
+                }
+
+                if (!beginCalled) {
+                    float tWidth = item.Texture.Width;
+                    float tHeight = item.Texture.Height;
+                    float ratio = tWidth / tHeight;
+                    beginCalled = true;
+                    currentBuffer.SetValue(0, Matrix4x4.CreateScale(item.OverlayScale * ratio, item.OverlayScale, 1f) * Matrix4x4.CreateTranslation(Camera.Position.X * item.OverlayFactor, Camera.Position.Y * item.OverlayFactor, 0f));
+                    currentBuffer.UpdateBuffer();
+                    currentBatch.Begin(SamplerType.Point);
+                }
+                currentBatch.DrawTexture2D(item.Mask, new Rectangle(0, 0, width, height), sourceRect: item.SourceRect, scale: Vector2.One, origin: Vector2.Zero, rotation: 0f, color: new RgbaFloat(1f, 1f, 1f, item.Opacity), flip: item.FlipType);
+            }
+            if (beginCalled) {
+                beginCalled = false;
+                currentBatch.End();
+            }
+
+            _drawBackgroundItem.Clear();
+        }
 
         public static void RenderOverlay(Group group, Camera2D Camera)
         {
