@@ -72,6 +72,7 @@ namespace LudumDare48
         public float Opacity;
         public float Factor;
         public float Scale;
+        public int Layer;
         public Texture2D Texture;
     }
 

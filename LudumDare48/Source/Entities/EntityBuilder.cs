@@ -17,6 +17,7 @@ namespace LudumDare48
     public static class EntityBuilder
     {
         public static Registry Registry;
+        public static int SortLayer = 0;
 
         public static Entity CreatePlayer(Vector2 position)
         {
@@ -98,6 +99,7 @@ namespace LudumDare48
                 Parent = parent,
                 Factor = factor,
                 Scale = scale,
+                Layer = SortLayer++,
             });
 
             return overlay;
@@ -114,6 +116,7 @@ namespace LudumDare48
                 Opacity = opacity,
                 Factor = factor,
                 Scale = scale,
+                Layer = SortLayer++,
             });
 
             return overlay;

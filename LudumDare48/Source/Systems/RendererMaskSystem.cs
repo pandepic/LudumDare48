@@ -162,7 +162,7 @@ namespace LudumDare48
                     SourceRect = drawable.AtlasRect,
                     Texture = overlay.Texture,
                     Mask = drawable.Mask,
-                    Layer = drawable.Layer,
+                    Layer = overlay.Layer,
                     Color = drawable.Color,
                     FlipType = drawable.FlipType,
                     OverlayFactor = overlay.Factor,
