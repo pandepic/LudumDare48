@@ -13,7 +13,7 @@ namespace LudumDare48
         Death,
         Moving,
     }
-    
+
     public static class EntityBuilder
     {
         public static Registry Registry;
@@ -64,24 +64,24 @@ namespace LudumDare48
             {
                 RespawnPosition = position,
             });
-            
+
             player.TryAddComponent(new SpriteComponent()
             {
                 FrameSize = new Vector2I(50, 37),
                 Size = spritesheet.Size,
             });
-            
+
             player.TryAddComponent(new PlayerAnimationComponent());
-            
-            CreateOverlay(player, "adventurer-bg-08.png");
-            CreateOverlay(player, "adventurer-bg-04.png");
-            CreateOverlay(player, "adventurer-bg-07.png");
-            CreateOverlay(player, "adventurer-bg-06.png");
-            CreateOverlay(player, "adventurer-bg-05.png");
-            CreateOverlay(player, "adventurer-bg-03.png");
-            CreateOverlay(player, "adventurer-bg-01.png");
-            CreateOverlay(player, "adventurer-bg-02.png");
-            
+
+            CreateOverlay(player, "adventurer-bg-08.jpg");
+            CreateOverlay(player, "adventurer-bg-04.jpg");
+            CreateOverlay(player, "adventurer-bg-07.jpg");
+            CreateOverlay(player, "adventurer-bg-06.jpg");
+            CreateOverlay(player, "adventurer-bg-05.jpg");
+            CreateOverlay(player, "adventurer-bg-03.jpg");
+            CreateOverlay(player, "adventurer-bg-01.jpg");
+            CreateOverlay(player, "adventurer-bg-02.jpg");
+
             EntityUtility.PlaySpriteAnimation(player, AnimationType.Idle);
 
             return player;
@@ -107,7 +107,7 @@ namespace LudumDare48
         {
             var collisionType = ColliderEventType.None;
             var color = RgbaFloat.White;
-            
+
             switch (type)
             {
                 case PlatformType.Death:
@@ -117,7 +117,7 @@ namespace LudumDare48
                 }
                 break;
             }
-            
+
             var platform = Registry.CreateEntity();
 
             platform.TryAddComponent(new TransformComponent()
@@ -146,19 +146,19 @@ namespace LudumDare48
                 CollisionRect = new Rectangle(4, 9, 81, 25),
                 Scale = new Vector2(scale),
             });
-            
-            CreateOverlay(platform, "platform-bg-01.png");
-            CreateOverlay(platform, "platform-bg-02.png");
-            CreateOverlay(platform, "platform-bg-03.png");
-            CreateOverlay(platform, "platform-bg-04.png");
-            CreateOverlay(platform, "platform-bg-05.png");
-            CreateOverlay(platform, "platform-bg-06.png");
-            CreateOverlay(platform, "platform-bg-07.png");
-            CreateOverlay(platform, "platform-bg-08.png");
-            CreateOverlay(platform, "platform-bg-09.png");
-            CreateOverlay(platform, "platform-bg-10.png");
-            CreateOverlay(platform, "platform-bg-11.png");
-            CreateOverlay(platform, "platform-bg-12.png");
+
+            CreateOverlay(platform, "platform-bg-01.jpg");
+            CreateOverlay(platform, "platform-bg-02.jpg");
+            CreateOverlay(platform, "platform-bg-03.jpg");
+            CreateOverlay(platform, "platform-bg-04.jpg");
+            CreateOverlay(platform, "platform-bg-05.jpg");
+            CreateOverlay(platform, "platform-bg-06.jpg");
+            CreateOverlay(platform, "platform-bg-07.jpg");
+            CreateOverlay(platform, "platform-bg-08.jpg");
+            CreateOverlay(platform, "platform-bg-09.jpg");
+            CreateOverlay(platform, "platform-bg-10.jpg");
+            CreateOverlay(platform, "platform-bg-11.jpg");
+            CreateOverlay(platform, "platform-bg-12.jpg");
 
             return platform;
 
