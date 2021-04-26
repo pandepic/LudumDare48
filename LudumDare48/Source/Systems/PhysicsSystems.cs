@@ -98,6 +98,7 @@ namespace LudumDare48
                     var offset = directionY * -1f;
                     transform.Position.Y += intersect.Height * offset;
                     physics.IsFalling = false;
+                    physics.Velocity.Y = 0;
 
                     if (checkColliderCollider.EventType != ColliderEventType.None)
                     {

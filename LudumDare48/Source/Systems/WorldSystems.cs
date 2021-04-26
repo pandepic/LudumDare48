@@ -40,13 +40,11 @@ namespace LudumDare48
                     case MovementType.Left:
                         physics.Acceleration.X += -physics.MoveSpeed;
                         physics.Velocity.X = 0;
-                        drawable.FlipType = SpriteFlipType.Horizontal;
                         break;
 
                     case MovementType.Right:
                         physics.Acceleration.X += physics.MoveSpeed;
                         physics.Velocity.X = 0;
-                        drawable.FlipType = SpriteFlipType.None;
                         break;
 
                     case MovementType.Jump:

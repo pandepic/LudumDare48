@@ -9,7 +9,8 @@ namespace LudumDare48
     {
         public const float GRAVITY = 1000f;
         public const int MOVE_STEP = 8;
-        public const float DEATH_HEIGHT = 1000f;
+        
+        public float DeathHeight = 0f;
 
         public Game Game;
         public Registry Registry;
@@ -63,12 +64,9 @@ namespace LudumDare48
 
             EntityBuilder.Registry = Registry;
 
-            Player = EntityBuilder.CreatePlayer(new Vector2(50, 50));
-
-            EntityBuilder.CreatePlatform(new Vector2(25, 500));
-            EntityBuilder.CreatePlatform(new Vector2(500, 400));
-            EntityBuilder.CreatePlatform(new Vector2(-500, 400));
+            Player = EntityBuilder.CreatePlayer(new Vector2(50, -100));
             
+            LevelGenerator.GenerateLevel(this);
             DebugManager = new DebugManager(this, Player);
         }
         
@@ -76,11 +74,12 @@ namespace LudumDare48
         public override void Load()
         {
             Camera = new Camera2D(new Rectangle(0, 0, ElementGlobals.Window.Width, ElementGlobals.Window.Height));
+            Camera.Zoom = 0.5f;
         }
 
         public override void Update(GameTimer gameTimer)
         {
-            Systems.Physics(PhysicsGroup, ColliderGroup, gameTimer, GRAVITY, MOVE_STEP, DEATH_HEIGHT);
+            Systems.Physics(PhysicsGroup, ColliderGroup, gameTimer, GRAVITY, MOVE_STEP, DeathHeight);
             Systems.ColliderEvents(ColliderEventGroup);
             Systems.Death(DeathGroup);
             Systems.StartMovement(StartMovementGroup);

@@ -1,11 +1,19 @@
 using System.Numerics;
 using ElementEngine;
 using ElementEngine.ECS;
+using Veldrid;
 
 using Rectangle = ElementEngine.Rectangle;
 
 namespace LudumDare48
 {
+    public enum PlatformType
+    {
+        Normal,
+        Death,
+        Moving,
+    }
+    
     public static class EntityBuilder
     {
         public static Registry Registry;
@@ -24,14 +32,14 @@ namespace LudumDare48
             player.TryAddComponent(new PhysicsComponent()
             {
                 MaxSpeed = new Vector2(400, 1000),
-                MoveSpeed = 800f,
-                JumpSpeed = 550f,
+                MoveSpeed = 850f,
+                JumpSpeed = 800f,
                 Acceleration = Vector2.Zero,
                 Velocity = Vector2.Zero,
                 IsFalling = true,
             });
 
-            var scale = 10;
+            var scale = 8;
 
             player.TryAddComponent(new DrawableMaskComponent()
             {
@@ -42,6 +50,7 @@ namespace LudumDare48
                 Scale = new Vector2(scale),
                 Layer = 2,
                 FlipType = SpriteFlipType.None,
+                Color = RgbaFloat.White,
             });
 
             player.TryAddComponent(new ColliderComponent()
@@ -94,8 +103,21 @@ namespace LudumDare48
             return overlay;
         }
 
-        public static Entity CreatePlatform(Vector2 position)
+        public static Entity CreatePlatform(Vector2 position, PlatformType type)
         {
+            var collisionType = ColliderEventType.None;
+            var color = RgbaFloat.White;
+            
+            switch (type)
+            {
+                case PlatformType.Death:
+                {
+                    collisionType = ColliderEventType.Death;
+                    color = RgbaFloat.Red;
+                }
+                break;
+            }
+            
             var platform = Registry.CreateEntity();
 
             platform.TryAddComponent(new TransformComponent()
@@ -115,11 +137,12 @@ namespace LudumDare48
                 Scale = new Vector2(scale),
                 Layer = 2,
                 FlipType = SpriteFlipType.None,
+                Color = color,
             });
 
             platform.TryAddComponent(new ColliderComponent()
             {
-                EventType = ColliderEventType.None,
+                EventType = collisionType,
                 CollisionRect = new Rectangle(4, 9, 81, 25),
                 Scale = new Vector2(scale),
             });

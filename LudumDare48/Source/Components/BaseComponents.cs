@@ -1,6 +1,7 @@
 using System.Numerics;
 using ElementEngine;
 using ElementEngine.ECS;
+using Veldrid;
 
 using Rectangle = ElementEngine.Rectangle;
 
@@ -52,6 +53,7 @@ namespace LudumDare48
         public int Layer;
         public SpriteFlipType FlipType;
     }
+    
     public struct DrawableMaskComponent
     {
         public Rectangle AtlasRect;
@@ -61,7 +63,9 @@ namespace LudumDare48
         public Texture2D Mask;
         public int Layer;
         public SpriteFlipType FlipType;
+        public RgbaFloat Color;
     }
+    
     public struct OverlayComponent
     {
         public Entity Parent;

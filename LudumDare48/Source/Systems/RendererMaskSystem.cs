@@ -64,7 +64,7 @@ namespace LudumDare48
                     Texture = overlay.Texture,
                     Mask = drawable.Mask,
                     Layer = drawable.Layer,
-                    Color = RgbaFloat.White,
+                    Color = drawable.Color,
                     FlipType = drawable.FlipType,
                     OverlayFactor = overlay.Factor,
                     OverlayScale = overlay.Scale,
@@ -132,7 +132,7 @@ namespace LudumDare48
                     currentBatch.Begin(SamplerType.Point, Camera.GetViewMatrix());
                 }
 
-                currentBatch.DrawTexture2D(item.Mask, item.Position, sourceRect: item.SourceRect, scale: item.Scale, origin: item.Origin, rotation: item.Rotation, color: new RgbaFloat(1f, 1f, 1f, item.Opacity), flip: item.FlipType);
+                currentBatch.DrawTexture2D(item.Mask, item.Position, sourceRect: item.SourceRect, scale: item.Scale, origin: item.Origin, rotation: item.Rotation, color: new RgbaFloat(item.Color.R, item.Color.G, item.Color.B, item.Opacity), flip: item.FlipType);
             }
             if (beginCalled) {
                 beginCalled = false;
@@ -159,7 +159,7 @@ namespace LudumDare48
                     Texture = drawable.Texture,
                     Mask = drawable.Mask,
                     Layer = drawable.Layer,
-                    Color = RgbaFloat.White,
+                    Color = drawable.Color,
                     FlipType = drawable.FlipType,
                 });
             }

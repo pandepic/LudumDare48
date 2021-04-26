@@ -28,5 +28,5 @@ void main()
 
     vec4 diffuse = texture(sampler2D(fBg, fBgSampler), (uUVTransform * vec4(fTexCoords.x, fTexCoords.y, 0.0, 1.0)).xy);
 
-    fFragColor = vec4(diffuse.r, diffuse.g, diffuse.b, fColor.a);
+    fFragColor = vec4(diffuse.r * fColor.r, diffuse.g * fColor.g, diffuse.b * fColor.b, fColor.a);
 }

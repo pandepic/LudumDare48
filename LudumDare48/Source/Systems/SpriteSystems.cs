@@ -50,13 +50,14 @@ namespace LudumDare48
             {
                 ref var physics = ref entity.GetComponent<PhysicsComponent>();
                 ref var animation = ref entity.GetComponent<SpriteAnimationComponent>();
+                ref var drawable = ref entity.GetComponent<DrawableMaskComponent>();
+                
+                if (physics.Velocity.X < 0)
+                    drawable.FlipType = SpriteFlipType.Horizontal;
+                else
+                    drawable.FlipType = SpriteFlipType.None;
                 
                 var hasAnimation = entity.HasComponent<SpriteAnimationComponent>();
-                
-                // if (physics.IsFalling)
-                // {
-                //     return;
-                // }
                 
                 if (physics.Velocity.X == 0)
                 {
