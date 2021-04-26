@@ -54,7 +54,7 @@ namespace LudumDare48
                 
                 if (physics.Velocity.X < 0)
                     drawable.FlipType = SpriteFlipType.Horizontal;
-                else
+                else if (physics.Velocity.X > 0)
                     drawable.FlipType = SpriteFlipType.None;
                 
                 var hasAnimation = entity.HasComponent<SpriteAnimationComponent>();

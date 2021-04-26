@@ -34,6 +34,13 @@ namespace LudumDare48
                 else
                     CollisionMovement(entity, ref transform, ref physics, colliderGroup, gameTimer, moveStep);
                 
+                if (physics.IsFalling && physics.OnMovingPlatform.IsAlive)
+                {
+                    ref var movingPlatform = ref physics.OnMovingPlatform.GetComponent<MovingPlatformComponent>();
+                    movingPlatform.EntityOnPlatform = new Entity();
+                    physics.OnMovingPlatform = new Entity();
+                }
+                
                 if (transform.TransformedPosition.Y >= deathHeight && entity.HasComponent<PlayerComponent>())
                 {
                     entity.TryAddComponent(new DeathTag());
@@ -102,11 +109,20 @@ namespace LudumDare48
 
                     if (checkColliderCollider.EventType != ColliderEventType.None)
                     {
-                        entity.TryAddComponent(new ColliderEventComponent()
+                        if (checkColliderCollider.EventType == ColliderEventType.MovingPlatform)
                         {
-                            EventType = checkColliderCollider.EventType,
-                            CollidedWith = checkCollider,
-                        });
+                            ref var movingPlatform = ref checkCollider.GetComponent<MovingPlatformComponent>();
+                            movingPlatform.EntityOnPlatform = entity;
+                            physics.OnMovingPlatform = checkCollider;
+                        }
+                        else
+                        {
+                            entity.TryAddComponent(new ColliderEventComponent()
+                            {
+                                EventType = checkColliderCollider.EventType,
+                                CollidedWith = checkCollider,
+                            });
+                        }
                     }
                 }
             }
@@ -120,6 +136,9 @@ namespace LudumDare48
                 movement.X -= step;
                 physics.MoveAmount.X -= step * directionX;
                 transform.Position.X += step * directionX;
+                
+                if (physics.OnMovingPlatform.IsAlive)
+                    continue;
 
                 foreach (var checkCollider in colliderGroup.Entities)
                 {

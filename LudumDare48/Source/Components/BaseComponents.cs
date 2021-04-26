@@ -84,4 +84,15 @@ namespace LudumDare48
     {
         public MovementType MovementType;
     }
+    
+    public struct MovingPlatformComponent
+    {
+        public Vector2 StartPosition;
+        public Vector2 EndPosition;
+        public Vector2 Destination;
+        public float BaseCooldown;
+        public float Cooldown;
+        public float MoveSpeed;
+        public Entity EntityOnPlatform;
+    }
 }

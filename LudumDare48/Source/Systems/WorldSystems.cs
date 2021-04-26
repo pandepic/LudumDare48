@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Numerics;
 using ElementEngine;
@@ -78,9 +79,56 @@ namespace LudumDare48
                         drawable.FlipType = SpriteFlipType.None;
                         break;
                 }
-
+                
                 entity.RemoveComponent<StopMovementComponent>();
             }
         } // StopMovement
+        
+        public static void MovingPlatformSystem(Group group, GameTimer gameTimer)
+        {
+            foreach (var entity in group.Entities)
+            {
+                ref var transform = ref entity.GetComponent<TransformComponent>();
+                ref var movingPlatform = ref entity.GetComponent<MovingPlatformComponent>();
+                
+                if (movingPlatform.Cooldown > 0)
+                {
+                    movingPlatform.Cooldown -= gameTimer.DeltaS;
+                    continue;
+                }
+                
+                if (transform.TransformedPosition.GetDistance(movingPlatform.Destination) < 2f)
+                {
+                    if (movingPlatform.Destination == movingPlatform.StartPosition)
+                        movingPlatform.Destination = movingPlatform.EndPosition;
+                    else
+                        movingPlatform.Destination = movingPlatform.StartPosition;
+                    
+                    movingPlatform.Cooldown = movingPlatform.BaseCooldown;
+                }
+                
+                var direction = Vector2.Zero;
+
+                if (transform.TransformedPosition.X > movingPlatform.Destination.X)
+                    direction.X = -1;
+                else if (transform.TransformedPosition.X < movingPlatform.Destination.X)
+                    direction.X = 1;
+
+                if (transform.TransformedPosition.Y > movingPlatform.Destination.Y)
+                    direction.Y = -1;
+                else if (transform.TransformedPosition.Y < movingPlatform.Destination.Y)
+                    direction.Y = 1;
+
+                var velocity = direction * movingPlatform.MoveSpeed;
+                transform.Position += velocity * gameTimer.DeltaS;
+                
+                if (movingPlatform.EntityOnPlatform.IsAlive)
+                {
+                    ref var entityTransform = ref movingPlatform.EntityOnPlatform.GetComponent<TransformComponent>();
+                    entityTransform.Position += velocity * gameTimer.DeltaS;
+                    Console.WriteLine("TEST");
+                }
+            }
+        } // MovingPlatformSystem
     }
 }

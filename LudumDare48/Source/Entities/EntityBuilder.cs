@@ -146,7 +146,7 @@ namespace LudumDare48
                 CollisionRect = new Rectangle(4, 9, 81, 25),
                 Scale = new Vector2(scale),
             });
-
+            
             CreateOverlay(platform, "platform-bg-01.png");
             CreateOverlay(platform, "platform-bg-02.png");
             CreateOverlay(platform, "platform-bg-03.png");

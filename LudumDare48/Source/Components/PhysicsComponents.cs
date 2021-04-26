@@ -10,6 +10,7 @@ namespace LudumDare48
     {
         None,
         Death,
+        MovingPlatform,
     }
     
     public struct PhysicsComponent
@@ -21,6 +22,7 @@ namespace LudumDare48
         public Vector2 MoveAmount;
         public Vector2 MaxSpeed;
         public bool IsFalling;
+        public Entity OnMovingPlatform;
     }
     
     public struct ColliderComponent

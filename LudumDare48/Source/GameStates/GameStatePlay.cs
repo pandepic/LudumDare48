@@ -33,6 +33,7 @@ namespace LudumDare48
         public Group StopMovementGroup;
         public Group SpriteAnimationGroup;
         public Group PlayerAnimationGroup;
+        public Group MovingPlatformGroup;
 
         // Special entities
         public Entity Player;
@@ -46,9 +47,16 @@ namespace LudumDare48
         public override void Initialize()
         {
             SpriteBatch = new SpriteBatch2D();
-            Registry = new Registry();
-
             Font = AssetManager.LoadSpriteFont("LatoBlack.ttf");
+        }
+        
+        // called every time the state loads
+        public override void Load()
+        {
+            Camera = new Camera2D(new Rectangle(0, 0, ElementGlobals.Window.Width, ElementGlobals.Window.Height));
+            Camera.Zoom = 0.5f;
+            
+            Registry = new Registry();
 
             DrawableGroup = Registry.RegisterGroup<TransformComponent, DrawableComponent>();
             DrawableMaskGroup = Registry.RegisterGroup<TransformComponent, DrawableMaskComponent>();
@@ -61,6 +69,7 @@ namespace LudumDare48
             StopMovementGroup = Registry.RegisterGroup<StopMovementComponent, PhysicsComponent, DrawableMaskComponent>();
             SpriteAnimationGroup = Registry.RegisterGroup<SpriteAnimationComponent, SpriteComponent, DrawableMaskComponent>();
             PlayerAnimationGroup = Registry.RegisterGroup<PlayerAnimationComponent, SpriteAnimationComponent, SpriteComponent>();
+            MovingPlatformGroup = Registry.RegisterGroup<MovingPlatformComponent>();
 
             EntityBuilder.Registry = Registry;
 
@@ -68,13 +77,6 @@ namespace LudumDare48
             
             LevelGenerator.GenerateLevel(this);
             DebugManager = new DebugManager(this, Player);
-        }
-        
-        // called every time the state loads
-        public override void Load()
-        {
-            Camera = new Camera2D(new Rectangle(0, 0, ElementGlobals.Window.Width, ElementGlobals.Window.Height));
-            Camera.Zoom = 0.5f;
         }
 
         public override void Update(GameTimer gameTimer)
@@ -86,6 +88,7 @@ namespace LudumDare48
             Systems.StopMovement(StopMovementGroup);
             Systems.SpriteAnimation(SpriteAnimationGroup, gameTimer);
             Systems.PlayerAnimation(PlayerAnimationGroup);
+            Systems.MovingPlatformSystem(MovingPlatformGroup, gameTimer);
 
             // process removal queues for entities and components
             Registry.SystemsFinished();
