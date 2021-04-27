@@ -148,16 +148,15 @@ namespace LudumDare48
                 
                 if (playerTransform.TransformedPosition.GetDistance(recording.Position) < 400f)
                 {
-                    SoundManager.Play(recording.Asset, 1);
-                    recording.HasPlayed = true;
-                    
-                    playerComponent.RespawnPosition = recording.RespawnPosition;
-                    
                     if (recording.IsLastRecording)
                     {
                         gameState.Win();
                         SoundManager.StopByType(0);
                     }
+                    
+                    SoundManager.Play(recording.Asset, 1);
+                    recording.HasPlayed = true;
+                    playerComponent.RespawnPosition = recording.RespawnPosition;
                 }
             }
         } // Recordings
