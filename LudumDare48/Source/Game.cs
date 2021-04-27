@@ -34,7 +34,7 @@ namespace LudumDare48
             SetupWindow(windowRect, "1 Missed Message", null, vsync);
             SetupAssets("Content");
             
-            ClearColor = Veldrid.RgbaFloat.Black;
+            ClearColor = Veldrid.RgbaFloat.White;
             
             InputManager.LoadGameControls();
             Window.Resizable = false;

@@ -23,6 +23,7 @@ namespace LudumDare48
 
         public override void Load()
         {
+            Game.ClearColor = Veldrid.RgbaFloat.Black;
             Menu.EnableInput();
         }
 

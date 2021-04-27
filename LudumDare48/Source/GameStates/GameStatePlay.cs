@@ -56,6 +56,7 @@ namespace LudumDare48
         // called every time the state loads
         public override void Load()
         {
+            Game.ClearColor = Veldrid.RgbaFloat.White;
             HasWon = false;
             
             Camera = new Camera2D(new Rectangle(0, 0, ElementGlobals.Window.Width, ElementGlobals.Window.Height));
