@@ -11,6 +11,7 @@ namespace LudumDare48
         public const int MOVE_STEP = 8;
         
         public float DeathHeight = 0f;
+        public bool HasWon = false;
 
         public Game Game;
         public Registry Registry;
@@ -34,6 +35,7 @@ namespace LudumDare48
         public Group SpriteAnimationGroup;
         public Group PlayerAnimationGroup;
         public Group MovingPlatformGroup;
+        public Group RecordingsGroup;
 
         // Special entities
         public Entity Player;
@@ -53,6 +55,8 @@ namespace LudumDare48
         // called every time the state loads
         public override void Load()
         {
+            HasWon = false;
+            
             Camera = new Camera2D(new Rectangle(0, 0, ElementGlobals.Window.Width, ElementGlobals.Window.Height));
             Camera.Zoom = 0.5f;
             
@@ -70,13 +74,18 @@ namespace LudumDare48
             SpriteAnimationGroup = Registry.RegisterGroup<SpriteAnimationComponent, SpriteComponent, DrawableMaskComponent>();
             PlayerAnimationGroup = Registry.RegisterGroup<PlayerAnimationComponent, SpriteAnimationComponent, SpriteComponent>();
             MovingPlatformGroup = Registry.RegisterGroup<MovingPlatformComponent>();
-
+            RecordingsGroup = Registry.RegisterGroup<RecordingComponent>();
+            
             EntityBuilder.Registry = Registry;
-
+            
             Player = EntityBuilder.CreatePlayer(new Vector2(50, -100));
             
             LevelGenerator.GenerateLevel(this);
             DebugManager = new DebugManager(this, Player);
+            
+            SoundManager.SetVolume(0, 0.25f);
+            SoundManager.SetVolume(1, 0.5f);
+            SoundManager.Play("Open Your Mind (intense loop).ogg", 0, loop: true);
         }
 
         public override void Update(GameTimer gameTimer)
@@ -88,7 +97,8 @@ namespace LudumDare48
             Systems.StopMovement(StopMovementGroup);
             Systems.SpriteAnimation(SpriteAnimationGroup, gameTimer);
             Systems.PlayerAnimation(PlayerAnimationGroup);
-            Systems.MovingPlatformSystem(MovingPlatformGroup, gameTimer);
+            Systems.MovingPlatforms(MovingPlatformGroup, gameTimer);
+            Systems.Recordings(RecordingsGroup, Player, this);
 
             // process removal queues for entities and components
             Registry.SystemsFinished();
@@ -182,6 +192,11 @@ namespace LudumDare48
                 }
                 break;
             }
+        } // HandleGameControl
+        
+        public void Win()
+        {
+            Game.SetGameState(GameStateType.Win);
         }
 
     } // GameStatePlay

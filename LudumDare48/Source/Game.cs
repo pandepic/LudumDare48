@@ -7,6 +7,7 @@ namespace LudumDare48
     {
         Menu,
         Play,
+        Win,
     }
     
     public class Game : BaseGame
@@ -30,18 +31,19 @@ namespace LudumDare48
             vsync = false;
 #endif
             
-            SetupWindow(windowRect, "LudumDare48", null, vsync);
+            SetupWindow(windowRect, "1 Missed Message", null, vsync);
             SetupAssets("Content");
             
-            ClearColor = Veldrid.RgbaFloat.CornflowerBlue;
+            ClearColor = Veldrid.RgbaFloat.Black;
             
             InputManager.LoadGameControls();
             Window.Resizable = false;
             
             GameStates.Add(GameStateType.Menu, new GameStateMenu(this));
             GameStates.Add(GameStateType.Play, new GameStatePlay(this));
+            GameStates.Add(GameStateType.Win, new GameStateWin(this));
             
-            SetGameState(GameStateType.Play);
+            SetGameState(GameStateType.Menu);
         }
         
         public void SetGameState(GameStateType type)

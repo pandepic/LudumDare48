@@ -138,7 +138,12 @@ namespace LudumDare48
                 transform.Position.X += step * directionX;
                 
                 if (physics.OnMovingPlatform.IsAlive)
+                {
+                    Console.WriteLine("true");
                     continue;
+                }
+                
+                Console.WriteLine("false");
 
                 foreach (var checkCollider in colliderGroup.Entities)
                 {

@@ -17,9 +17,14 @@ namespace LudumDare48
                 if (entity.HasComponent<PlayerComponent>())
                 {
                     entity.RemoveComponent<DeathTag>();
+                    
                     ref var transform = ref entity.GetComponent<TransformComponent>();
                     ref var player = ref entity.GetComponent<PlayerComponent>();
+                    ref var physics = ref entity.GetComponent<PhysicsComponent>();
+                    
                     transform.Position = player.RespawnPosition;
+                    physics.Velocity = Vector2.Zero;
+                    physics.Acceleration = Vector2.Zero;
                 }
                 else
                 {
@@ -84,7 +89,7 @@ namespace LudumDare48
             }
         } // StopMovement
         
-        public static void MovingPlatformSystem(Group group, GameTimer gameTimer)
+        public static void MovingPlatforms(Group group, GameTimer gameTimer)
         {
             foreach (var entity in group.Entities)
             {
@@ -126,9 +131,35 @@ namespace LudumDare48
                 {
                     ref var entityTransform = ref movingPlatform.EntityOnPlatform.GetComponent<TransformComponent>();
                     entityTransform.Position += velocity * gameTimer.DeltaS;
-                    Console.WriteLine("TEST");
                 }
             }
-        } // MovingPlatformSystem
+        } // MovingPlatforms
+        
+        public static void Recordings(Group group, Entity player, GameStatePlay gameState)
+        {
+            foreach (var entity in group.Entities)
+            {
+                ref var recording = ref entity.GetComponent<RecordingComponent>();
+                ref var playerTransform = ref player.GetComponent<TransformComponent>();
+                ref var playerComponent = ref player.GetComponent<PlayerComponent>();
+                
+                if (recording.HasPlayed)
+                    continue;
+                
+                if (playerTransform.TransformedPosition.GetDistance(recording.Position) < 400f)
+                {
+                    SoundManager.Play(recording.Asset, 1);
+                    recording.HasPlayed = true;
+                    
+                    playerComponent.RespawnPosition = recording.RespawnPosition;
+                    
+                    if (recording.IsLastRecording)
+                    {
+                        gameState.Win();
+                        SoundManager.StopByType(0);
+                    }
+                }
+            }
+        } // Recordings
     }
 }

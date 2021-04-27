@@ -163,5 +163,21 @@ namespace LudumDare48
             return platform;
 
         } // CreatePlatform
+        
+        public static Entity CreateRecording(string asset, Vector2 position, Vector2 respawnPosition, bool isLastRecording)
+        {
+            var recording = Registry.CreateEntity();
+            
+            recording.TryAddComponent(new RecordingComponent()
+            {
+                HasPlayed = false,
+                Asset = asset,
+                Position = position,
+                IsLastRecording = isLastRecording,
+                RespawnPosition = respawnPosition,
+            });
+            
+            return recording;
+        }
     }
 }

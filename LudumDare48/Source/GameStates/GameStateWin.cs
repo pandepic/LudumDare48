@@ -2,13 +2,13 @@ using ElementEngine;
 
 namespace LudumDare48
 {
-    public class GameStateMenu : GameState, IUIEventHandler
+    public class GameStateWin : GameState, IUIEventHandler
     {
         public Game Game;
         public SpriteBatch2D SpriteBatch;
         public UIMenu Menu;
         
-        public GameStateMenu(Game game)
+        public GameStateWin(Game game)
         {
             Game = game;
         }
@@ -17,7 +17,7 @@ namespace LudumDare48
         {
             SpriteBatch = new SpriteBatch2D();
             Menu = new UIMenu();
-            Menu.Load("MainMenu.xml", "Templates.xml");
+            Menu.Load("Win.xml", "Templates.xml");
             Menu.AddUIEventHandler(this);
         }
 

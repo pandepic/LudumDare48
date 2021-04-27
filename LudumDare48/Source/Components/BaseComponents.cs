@@ -95,4 +95,13 @@ namespace LudumDare48
         public float MoveSpeed;
         public Entity EntityOnPlatform;
     }
+    
+    public struct RecordingComponent
+    {
+        public bool HasPlayed;
+        public string Asset;
+        public Vector2 Position;
+        public bool IsLastRecording;
+        public Vector2 RespawnPosition;
+    }
 }
