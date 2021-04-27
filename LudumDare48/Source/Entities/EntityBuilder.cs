@@ -34,7 +34,7 @@ namespace LudumDare48
             {
                 MaxSpeed = new Vector2(400, 1000),
                 MoveSpeed = 850f,
-                JumpSpeed = 800f,
+                JumpSpeed = 900f,
                 Acceleration = Vector2.Zero,
                 Velocity = Vector2.Zero,
                 IsFalling = true,
