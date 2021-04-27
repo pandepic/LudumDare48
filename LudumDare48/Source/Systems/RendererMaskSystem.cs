@@ -111,7 +111,7 @@ namespace LudumDare48
                     File.ReadAllText(AssetManager.GetAssetPath("mask.frag")),
                     ElementEngine.Vertex2DPositionTexCoordsColor.VertexLayout);
 
-                    var pipelineTexture = new SimplePipelineTexture2D("fBg", item.Texture, SamplerType.Point);
+                    var pipelineTexture = new SimplePipelineTexture2D("fBg", item.Texture, SamplerType.Linear);
 
                     currentBuffer = new SimpleUniformBuffer<Matrix4x4>(ElementGlobals.GraphicsDevice, "MyUniforms", 1, Veldrid.ShaderStages.Fragment);
                     currentBuffer.SetValue(0, Camera.GetViewMatrix());
@@ -205,7 +205,7 @@ namespace LudumDare48
                     File.ReadAllText(AssetManager.GetAssetPath("mask.frag")),
                     ElementEngine.Vertex2DPositionTexCoordsColor.VertexLayout);
 
-                    var pipelineTexture = new SimplePipelineTexture2D("fBg", item.Texture, SamplerType.Point);
+                    var pipelineTexture = new SimplePipelineTexture2D("fBg", item.Texture, SamplerType.Linear);
 
                     currentBuffer = new SimpleUniformBuffer<Matrix4x4>(ElementGlobals.GraphicsDevice, "MyUniforms", 1, Veldrid.ShaderStages.Fragment);
                     currentBuffer.SetValue(0, Camera.GetViewMatrix());
@@ -298,7 +298,7 @@ namespace LudumDare48
                     File.ReadAllText(AssetManager.GetAssetPath("mask.frag")),
                     ElementEngine.Vertex2DPositionTexCoordsColor.VertexLayout);
 
-                    var pipelineTexture = new SimplePipelineTexture2D("fBg", item.Texture, SamplerType.Point);
+                    var pipelineTexture = new SimplePipelineTexture2D("fBg", item.Texture, SamplerType.Linear);
 
                     currentBuffer = new SimpleUniformBuffer<Matrix4x4>(ElementGlobals.GraphicsDevice, "MyUniforms", 1, Veldrid.ShaderStages.Fragment);
                     currentBuffer.SetValue(0, Matrix4x4.Identity);

@@ -44,7 +44,7 @@ namespace LudumDare48
 
             player.TryAddComponent(new DrawableMaskComponent()
             {
-                Texture = new Texture2D(50, 50, Veldrid.RgbaByte.White),
+                Texture = new Texture2D(50, 50, Veldrid.RgbaByte.Black),
                 AtlasRect = new Rectangle(0, 0, 50, 37),
                 Mask = spritesheet,
                 Origin = Vector2.Zero,
