@@ -139,11 +139,8 @@ namespace LudumDare48
                 
                 if (physics.OnMovingPlatform.IsAlive)
                 {
-                    Console.WriteLine("true");
                     continue;
                 }
-                
-                Console.WriteLine("false");
 
                 foreach (var checkCollider in colliderGroup.Entities)
                 {
