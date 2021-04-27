@@ -83,7 +83,7 @@ namespace LudumDare48
 
                 if (i > 0 && i % platformsPerRecording == 0 && recordingIndex < Recordings.Count) {
                     var data = Recordings[recordingIndex];
-                    var recording = EntityBuilder.CreateRecording(data.Asset, drawRect.LocationF, drawRect.LocationF + new Vector2(drawRect.Width / 2 - 100, -50f), recordingIndex == Recordings.Count - 1, recordingIndex == Recordings.Count - 2);
+                    var recording = EntityBuilder.CreateRecording(data.Asset, drawRect.LocationF, drawRect.LocationF + new Vector2(drawRect.Width / 2 - 200, -450f), recordingIndex == Recordings.Count - 1, recordingIndex == Recordings.Count - 2);
                     recordingIndex += 1;
                     drawable.Color = Veldrid.RgbaFloat.Green;
                     recordingPlatform = true;
