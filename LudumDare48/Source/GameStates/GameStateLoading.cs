@@ -2,13 +2,15 @@ using ElementEngine;
 
 namespace LudumDare48
 {
-    public class GameStateMenu : GameState, IUIEventHandler
+    public class GameStateLoading : GameState
     {
         public Game Game;
         public SpriteBatch2D SpriteBatch;
         public UIMenu Menu;
         
-        public GameStateMenu(Game game)
+        public float DummyTime = 0.2f;
+        
+        public GameStateLoading(Game game)
         {
             Game = game;
         }
@@ -17,8 +19,7 @@ namespace LudumDare48
         {
             SpriteBatch = new SpriteBatch2D();
             Menu = new UIMenu();
-            Menu.Load("MainMenu.xml", "Templates.xml");
-            Menu.AddUIEventHandler(this);
+            Menu.Load("Loading.xml", "Templates.xml");
         }
 
         public override void Load()
@@ -35,6 +36,13 @@ namespace LudumDare48
         public override void Update(GameTimer gameTimer)
         {
             Menu.Update(gameTimer);
+            
+            DummyTime -= gameTimer.DeltaS;
+            
+            if (DummyTime <= 0f)
+            {
+                Game.SetGameState(GameStateType.Play);
+            }
         }
 
         public override void Draw(GameTimer gameTimer)
@@ -42,24 +50,6 @@ namespace LudumDare48
             SpriteBatch.Begin(SamplerType.Point);
             Menu.Draw(SpriteBatch);
             SpriteBatch.End();
-        }
-        
-        public void HandleUIEvent(UIMenu source, UIEventType type, UIWidget widget)
-        {
-            switch (widget.Name)
-            {
-                case "btnPlay":
-                {
-                    Game.SetGameState(GameStateType.Loading);
-                }
-                break;
-                
-                case "btnExit":
-                {
-                    Game.Quit();
-                }
-                break;
-            }
         }
     }
 }

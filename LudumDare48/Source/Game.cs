@@ -8,6 +8,7 @@ namespace LudumDare48
         Menu,
         Play,
         Win,
+        Loading,
     }
 
     public class Game : BaseGame
@@ -42,6 +43,7 @@ namespace LudumDare48
             GameStates.Add(GameStateType.Menu, new GameStateMenu(this));
             GameStates.Add(GameStateType.Play, new GameStatePlay(this));
             GameStates.Add(GameStateType.Win, new GameStateWin(this));
+            GameStates.Add(GameStateType.Loading, new GameStateLoading(this));
             
             SetGameState(GameStateType.Menu);
         }
