@@ -40,16 +40,18 @@ namespace LudumDare48
                 ref var movement = ref entity.GetComponent<StartMovementComponent>();
                 ref var physics = ref entity.GetComponent<PhysicsComponent>();
                 ref var drawable = ref entity.GetComponent<DrawableMaskComponent>();
+                
+                entity.RemoveComponent<StartMovementComponent>();
 
                 switch (movement.MovementType)
                 {
                     case MovementType.Left:
-                        physics.Acceleration.X += -physics.MoveSpeed;
+                        physics.Acceleration.X = -physics.MoveSpeed;
                         physics.Velocity.X = 0;
                         break;
 
                     case MovementType.Right:
-                        physics.Acceleration.X += physics.MoveSpeed;
+                        physics.Acceleration.X = physics.MoveSpeed;
                         physics.Velocity.X = 0;
                         break;
 
@@ -57,8 +59,6 @@ namespace LudumDare48
                         physics.Velocity.Y = -physics.JumpSpeed;
                         break;
                 }
-
-                entity.RemoveComponent<StartMovementComponent>();
             }
         }
 
@@ -73,13 +73,13 @@ namespace LudumDare48
                 switch (movement.MovementType)
                 {
                     case MovementType.Left:
-                        physics.Acceleration.X += physics.MoveSpeed;
+                        physics.Acceleration.X = 0;
                         physics.Velocity.X = 0;
                         drawable.FlipType = SpriteFlipType.Horizontal;
                         break;
 
                     case MovementType.Right:
-                        physics.Acceleration.X += -physics.MoveSpeed;
+                        physics.Acceleration.X = 0;
                         physics.Velocity.X = 0;
                         drawable.FlipType = SpriteFlipType.None;
                         break;
