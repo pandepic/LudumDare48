@@ -105,7 +105,7 @@ namespace LudumDare48
             return overlay;
         }
 
-        public static Entity CreateBackground(string name, float opacity = 0.2f, float factor = 0.001f, float scale = 2f) {
+        public static Entity CreateBackground(string name, float opacity = 0.1f, float factor = 0.0001f, float scale = 0.1f) {
             var overlay = Registry.CreateEntity();
 
             overlay.TryAddComponent(new BackgroundComponent()

@@ -8,7 +8,7 @@ namespace LudumDare48
         Menu,
         Play,
     }
-    
+
     public class Game : BaseGame
     {
         public Dictionary<GameStateType, GameState> GameStates { get; set; } = new Dictionary<GameStateType, GameState>();
@@ -16,7 +16,7 @@ namespace LudumDare48
         public override void Load()
         {
             SettingsManager.LoadFromPath("Settings.xml");
-            
+
             var windowRect = new ElementEngine.Rectangle()
             {
                 X = 100,
@@ -24,26 +24,26 @@ namespace LudumDare48
                 Width = SettingsManager.GetSetting<int>("Window", "Width"),
                 Height = SettingsManager.GetSetting<int>("Window", "Height")
             };
-            
+
             var vsync = false;
 #if DEBUG
             vsync = false;
 #endif
-            
+
             SetupWindow(windowRect, "LudumDare48", null, vsync);
             SetupAssets("Content");
-            
-            ClearColor = Veldrid.RgbaFloat.CornflowerBlue;
-            
+
+            ClearColor = Veldrid.RgbaFloat.White;
+
             InputManager.LoadGameControls();
             Window.Resizable = false;
-            
+
             GameStates.Add(GameStateType.Menu, new GameStateMenu(this));
             GameStates.Add(GameStateType.Play, new GameStatePlay(this));
-            
+
             SetGameState(GameStateType.Play);
         }
-        
+
         public void SetGameState(GameStateType type)
         {
             if (GameStates.TryGetValue(type, out var state))
