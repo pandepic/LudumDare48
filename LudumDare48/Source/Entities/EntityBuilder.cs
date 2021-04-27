@@ -17,6 +17,7 @@ namespace LudumDare48
     public static class EntityBuilder
     {
         public static Registry Registry;
+        public static int SortLayer = 0;
 
         public static Entity CreatePlayer(Vector2 position)
         {
@@ -33,7 +34,7 @@ namespace LudumDare48
             {
                 MaxSpeed = new Vector2(400, 1000),
                 MoveSpeed = 850f,
-                JumpSpeed = 800f,
+                JumpSpeed = 900f,
                 Acceleration = Vector2.Zero,
                 Velocity = Vector2.Zero,
                 IsFalling = true,
@@ -43,7 +44,7 @@ namespace LudumDare48
 
             player.TryAddComponent(new DrawableMaskComponent()
             {
-                Texture = new Texture2D(50, 50, Veldrid.RgbaByte.White),
+                Texture = new Texture2D(50, 50, Veldrid.RgbaByte.Black),
                 AtlasRect = new Rectangle(0, 0, 50, 37),
                 Mask = spritesheet,
                 Origin = Vector2.Zero,
@@ -98,6 +99,24 @@ namespace LudumDare48
                 Parent = parent,
                 Factor = factor,
                 Scale = scale,
+                Layer = SortLayer++,
+            });
+
+            return overlay;
+        }
+
+        public static Entity CreateBackground(string name, float opacity = 0.1f, float factor = 0.0001f, float scale = 0.1f) {
+            var overlay = Registry.CreateEntity();
+
+            overlay.TryAddComponent(new BackgroundComponent()
+            {
+                Texture = AssetManager.LoadTexture2D(name),
+                AtlasRect = new Rectangle(0, 0, 50, 50),
+                Mask = new Texture2D(50, 50, Veldrid.RgbaByte.White),
+                Opacity = opacity,
+                Factor = factor,
+                Scale = scale,
+                Layer = SortLayer++,
             });
 
             return overlay;
@@ -178,6 +197,18 @@ namespace LudumDare48
             });
             
             return recording;
+        }
+        
+        public static void CreateBackgrounds() {
+            CreateBackground("bg-01.jpg");
+            CreateBackground("bg-02.jpg");
+            CreateBackground("bg-03.jpg");
+            CreateBackground("bg-04.jpg");
+            CreateBackground("bg-05.jpg");
+            CreateBackground("bg-06.jpg");
+            CreateBackground("bg-07.jpg");
+            CreateBackground("bg-08.jpg");
+            CreateBackground("bg-09.jpg");
         }
     }
 }

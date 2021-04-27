@@ -53,7 +53,7 @@ namespace LudumDare48
         public int Layer;
         public SpriteFlipType FlipType;
     }
-    
+
     public struct DrawableMaskComponent
     {
         public Rectangle AtlasRect;
@@ -65,13 +65,25 @@ namespace LudumDare48
         public SpriteFlipType FlipType;
         public RgbaFloat Color;
     }
-    
+
     public struct OverlayComponent
     {
         public Entity Parent;
         public float Opacity;
         public float Factor;
         public float Scale;
+        public int Layer;
+        public Texture2D Texture;
+    }
+
+    public struct BackgroundComponent
+    {
+        public float Opacity;
+        public float Factor;
+        public float Scale;
+        public int Layer;
+        public Rectangle AtlasRect;
+        public Texture2D Mask;
         public Texture2D Texture;
     }
 
@@ -84,7 +96,7 @@ namespace LudumDare48
     {
         public MovementType MovementType;
     }
-    
+
     public struct MovingPlatformComponent
     {
         public Vector2 StartPosition;

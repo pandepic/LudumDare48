@@ -9,7 +9,7 @@ namespace LudumDare48
     {
         public const float GRAVITY = 1000f;
         public const int MOVE_STEP = 8;
-        
+
         public float DeathHeight = 0f;
         public bool HasWon = false;
 
@@ -26,6 +26,7 @@ namespace LudumDare48
         public Group DrawableGroup;
         public Group DrawableMaskGroup;
         public Group DrawableOverlayGroup;
+        public Group DrawableBackgroundGroup;
         public Group PhysicsGroup;
         public Group ColliderGroup;
         public Group ColliderEventGroup;
@@ -51,7 +52,7 @@ namespace LudumDare48
             SpriteBatch = new SpriteBatch2D();
             Font = AssetManager.LoadSpriteFont("LatoBlack.ttf");
         }
-        
+
         // called every time the state loads
         public override void Load()
         {
@@ -59,12 +60,13 @@ namespace LudumDare48
             
             Camera = new Camera2D(new Rectangle(0, 0, ElementGlobals.Window.Width, ElementGlobals.Window.Height));
             Camera.Zoom = 0.5f;
-            
+
             Registry = new Registry();
 
             DrawableGroup = Registry.RegisterGroup<TransformComponent, DrawableComponent>();
             DrawableMaskGroup = Registry.RegisterGroup<TransformComponent, DrawableMaskComponent>();
             DrawableOverlayGroup = Registry.RegisterGroup<OverlayComponent>();
+            DrawableBackgroundGroup = Registry.RegisterGroup<BackgroundComponent>();
             PhysicsGroup = Registry.RegisterGroup<TransformComponent, PhysicsComponent>();
             ColliderGroup = Registry.RegisterGroup<TransformComponent, ColliderComponent>();
             ColliderEventGroup = Registry.RegisterGroup<ColliderEventComponent>();
@@ -79,7 +81,9 @@ namespace LudumDare48
             EntityBuilder.Registry = Registry;
             
             Player = EntityBuilder.CreatePlayer(new Vector2(50, -100));
-            
+
+            EntityBuilder.CreateBackgrounds();
+
             LevelGenerator.GenerateLevel(this);
             DebugManager = new DebugManager(this, Player);
             
@@ -113,6 +117,8 @@ namespace LudumDare48
         public override void Draw(GameTimer gameTimer)
         {
             var playerRect = EntityUtility.GetEntityDrawRect(Player);
+
+            Systems.RenderBackground(DrawableBackgroundGroup, Camera);
 
             SpriteBatch.Begin(SamplerType.Point, Camera.GetViewMatrix());
             Systems.Render(DrawableGroup, SpriteBatch);
