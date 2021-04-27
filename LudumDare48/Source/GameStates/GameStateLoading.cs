@@ -26,6 +26,7 @@ namespace LudumDare48
         {
             Game.ClearColor = Veldrid.RgbaFloat.Black;
             Menu.EnableInput();
+            DummyTime = 0.2f;
         }
 
         public override void Unload()
