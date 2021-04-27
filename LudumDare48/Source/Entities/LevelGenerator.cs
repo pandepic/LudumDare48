@@ -56,8 +56,8 @@ namespace LudumDare48
         
         public static void GenerateLevel(GameStatePlay gameState)
         {
-            var rng = new Random(1);
-            var platformsPerRecording = 5;
+            var rng = new Random();
+            var platformsPerRecording = 10;
             var platforms = (platformsPerRecording * Recordings.Count) + platformsPerRecording;
             var jumpHeight = 100;
             var jumpLength = 200;
