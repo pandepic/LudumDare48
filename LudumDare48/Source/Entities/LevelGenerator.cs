@@ -46,11 +46,17 @@ namespace LudumDare48
                 Asset = "No Permit.ogg",
                 Index = 5,
             },
+            
+            new RecordingData()
+            {
+                Asset = "I'm So Cold.ogg",
+                Index = 6,
+            },
 
             new RecordingData()
             {
                 Asset = "Farewell.ogg",
-                Index = 6,
+                Index = 7,
             },
         };
 
