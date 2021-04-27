@@ -153,6 +153,11 @@ namespace LudumDare48
                         gameState.Win();
                         SoundManager.StopByType(0);
                     }
+                    else if (recording.IsSecondLastRecording)
+                    {
+                        SoundManager.StopByType(0);
+                        SoundManager.Play("Open Your Mind (intense loop).ogg", 0, loop: true);
+                    }
                     
                     SoundManager.Play(recording.Asset, 1);
                     recording.HasPlayed = true;

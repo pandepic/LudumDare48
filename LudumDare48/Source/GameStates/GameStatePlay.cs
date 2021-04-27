@@ -90,7 +90,7 @@ namespace LudumDare48
             
             SoundManager.SetVolume(0, 0.25f);
             SoundManager.SetVolume(1, 0.5f);
-            SoundManager.Play("Open Your Mind (intense loop).ogg", 0, loop: true);
+            SoundManager.Play("Open Your Mind.ogg", 0, loop: true);
         }
 
         public override void Update(GameTimer gameTimer)

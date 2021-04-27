@@ -114,6 +114,7 @@ namespace LudumDare48
         public string Asset;
         public Vector2 Position;
         public bool IsLastRecording;
+        public bool IsSecondLastRecording;
         public Vector2 RespawnPosition;
     }
 }

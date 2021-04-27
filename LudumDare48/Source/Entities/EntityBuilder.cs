@@ -183,7 +183,7 @@ namespace LudumDare48
 
         } // CreatePlatform
         
-        public static Entity CreateRecording(string asset, Vector2 position, Vector2 respawnPosition, bool isLastRecording)
+        public static Entity CreateRecording(string asset, Vector2 position, Vector2 respawnPosition, bool isLastRecording, bool isSecondLastRecording)
         {
             var recording = Registry.CreateEntity();
             
@@ -194,6 +194,7 @@ namespace LudumDare48
                 Position = position,
                 IsLastRecording = isLastRecording,
                 RespawnPosition = respawnPosition,
+                IsSecondLastRecording = isSecondLastRecording,
             });
             
             return recording;
