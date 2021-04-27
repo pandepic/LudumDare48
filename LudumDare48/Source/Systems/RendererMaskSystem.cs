@@ -146,9 +146,16 @@ namespace LudumDare48
 
         public static void RenderOverlay(Group group, Camera2D Camera)
         {
+            var cameraView = Camera.ScaledView;
+            
             foreach (var entity in group.Entities)
             {
                 ref var overlay = ref entity.GetComponent<OverlayComponent>();
+                
+                var entityRect = EntityUtility.GetEntityDrawRect(overlay.Parent);
+                if (!entityRect.Intersects(cameraView))
+                    continue;
+                
                 ref var transform = ref overlay.Parent.GetComponent<TransformComponent>();
                 ref var drawable = ref overlay.Parent.GetComponent<DrawableMaskComponent>();
 
@@ -243,8 +250,14 @@ namespace LudumDare48
 
         public static void RenderMask(Group group, Camera2D Camera)
         {
+            var cameraView = Camera.ScaledView;
+            
             foreach (var entity in group.Entities)
             {
+                var entityRect = EntityUtility.GetEntityDrawRect(entity);
+                if (!entityRect.Intersects(cameraView))
+                    continue;
+                
                 ref var transform = ref entity.GetComponent<TransformComponent>();
                 ref var drawable = ref entity.GetComponent<DrawableMaskComponent>();
 
